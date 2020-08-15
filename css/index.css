@@ -4,7 +4,7 @@ body {
   min-height: 100vh;
   max-height: 100vh;
   user-select: none;
-  overflow: hidden;
+  overflow: auto;
 }
 
 header {
@@ -13,17 +13,21 @@ header {
   left: 0;
   width: 100%;
   height: 50px;
-  background-color: rgb(204, 204, 204);
+  background-color: #fff;
   z-index: 10;
+  border-bottom: 10px solid #F0F2F5;
 }
 
 /* 左边部分开始 */
 .scalable {
-  padding-top: 50px;
+  padding-top: 60px;
   position: relative;
   background-color: #fff;
   min-width: 250px;
   max-width: 300px;
+  border: 10px solid #F0F2F5;
+  border-top: none;
+
 }
 
 .scalable .separator {
@@ -47,19 +51,149 @@ header {
   background-color: #fff;
   padding-left: 10px;
   cursor: pointer;
-  border-right: 10px solid rgba(202, 78, 37,0);
+  border-right: 10px solid rgba(202, 78, 37, 0);
   transition: 0.3s;
 }
 
 .leftside .leftcard {
   border-right: 10px solid rgb(202, 78, 37);
-  background-color: #F5F5F7;
+  background-color: #EEEEEE;
 }
 
 .main {
   flex: 1;
   position: relative;
-  padding: 0 40px;
-  padding-top: 50px;
+  padding-top: 60px;
   background-color: #F3F4F6;
+  min-width: 800px;
+  border-right: 10px solid #F0F2F5;
+  border-bottom: 10px solid #F0F2F5;
+}
+
+/* 学生信息展示 */
+/* @author: 陈泳充 */
+.main-enroll {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.main-enroll .head {
+  position: relative;
+  box-sizing: border-box;
+  padding: 0 20px;
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  background-color: #fff;
+}
+
+.main-enroll .head select,
+.main-enroll .head input {
+  outline: none;
+}
+
+.main-enroll .head #sex,
+.main-enroll .head #groups {
+  margin-right: 40px;
+}
+
+.main-enroll .head input,
+.main-enroll .head .confirm-change {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.main-enroll .head input {
+  padding-left: 10px;
+  right: 150px;
+  width: 200px;
+  height: 25px;
+  border: 1px solid #aaa;
+}
+
+.main-enroll .head .confirm-change {
+  right: 20px;
+  width: 75px;
+  height: 25px;
+  line-height: 25px;
+  text-align: center;
+  background-color: red;
+  color: #fff;
+}
+
+.main-enroll .students {
+  flex: 1;
+  overflow: auto;
+}
+
+.main-enroll .students table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+.main-enroll .students th {
+  box-sizing: border-box;
+  padding: 0 15px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.main-enroll .students thead tr {
+  height: 50px;
+  background-color: #F8F8F8;
+}
+
+.main-enroll .students thead th {
+  min-width: 30px;
+  max-width: 200px;
+  position: relative;
+  border: 1px solid #ccc;
+}
+
+.main-enroll .students thead th:first-child {
+  border-left: none;
+}
+
+.main-enroll .students thead th:last-child {
+  border-right: none;
+}
+
+.main-enroll .students thead .move-loc {
+  position: absolute;
+  right: 0px;
+  top: 0;
+  width: 5px;
+  height: 100%;
+  background-color: transparent;
+  cursor: col-resize;
+}
+
+.main-enroll .students tbody th {
+  height: 50px;
+  line-height: 50px;
+  font-weight: 400;
+  border-bottom: 1px solid #ccc;
+  background-color: #fff;
+}
+
+.main-enroll .students tbody tr th:last-child:hover {
+  color: red;
+  cursor: pointer;
+}
+
+.main-enroll .pages {
+  width: 100%;
+  height: 50px;
+  background-color: pink;
+}
+
+/* 陈泳充部分结束 */
+
+.main-interview {
+  display: none;
 }
