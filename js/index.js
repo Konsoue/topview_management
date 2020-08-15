@@ -35,9 +35,6 @@ separator.on("mousedown", startDrag);
 
 // 分页
 // @author: huimei
-$('.main-interview').hide();
-$('.main-enroll').show();
-
 $('.enroll-card').click(function() {
   $('.enroll-card').addClass('leftcard');
   $('.interview-card').removeClass('leftcard');
@@ -52,11 +49,11 @@ $('.interview-card').click(function() {
 })
 
 /*
- *@author:   mei
+ *@author:   huimei
  *@function: 控制登录框
  *@params:   wu
 */
+$('.login-page').hide();
 $('.avatar').click(function() {
   $('.login-page').slideToggle()
-
 })
