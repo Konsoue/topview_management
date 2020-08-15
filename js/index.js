@@ -50,3 +50,13 @@ $('.interview-card').click(function() {
   $('.main-enroll').hide();
   $('.main-interview').show();
 })
+
+/*
+ *@author:   mei
+ *@function: 控制登录框
+ *@params:   wu
+*/
+$('.avatar').click(function() {
+  $('.login-page').slideToggle()
+
+})
