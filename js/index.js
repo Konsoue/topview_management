@@ -47,3 +47,51 @@ $('.interview-card').click(function() {
   $('.main-enroll').hide();
   $('.main-interview').show();
 })
+
+/*
+ *@author:   huimei
+ *@function: 控制登录框
+ *@params:   wu
+*/
+$('.login-page').hide();
+$('.avatar').click(function() {
+  $('.login-page').slideToggle()
+})
+
+$('.login-page').mousedown(function(e) {
+  
+  // e.pageX
+  var positionDiv = $('.login-page').offset();
+  var distenceX = e.pageX - positionDiv.left;
+  var distenceY = e.pageY - positionDiv.top;
+  //alert(distenceX)
+  // alert(positionDiv.left);
+
+  $(document).mousemove(function(e) {
+      $('.login-page').css('cursor','pointer');
+      var x = e.pageX - distenceX;
+      var y = e.pageY - distenceY;
+
+      if (x < 0) {
+          x = 0;
+      } else if (x > $(document).width() - $('.login-page').outerWidth(true)) {
+          x = $(document).width() - $('.login-page').outerWidth(true);
+      }
+
+      if (y < 0) {
+          y = 0;
+      } else if (y > $(document).height() - $('.login-page').outerHeight(true)) {
+          y = $(document).height() - $('.login-page').outerHeight(true);
+      }
+
+      $('.login-page').css({
+          'left': x + 'px',
+          'top': y + 'px'
+      });
+  });
+
+  $(document).mouseup(function() {
+      $(document).off('mousemove');
+      $('.login-page').css('cursor','default');
+  });
+});
