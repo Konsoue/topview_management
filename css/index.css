@@ -105,11 +105,8 @@ header img {
 .login-page button:hover {
   color: #fff;
   background-color: #eca998;
-  z-index: 10;
-  border-bottom: 10px solid #F0F2F5;
-  display: flex;
-  justify-content: space-between;
 }
+/* end */
 
 /* 左边部分开始 */
 .scalable {
