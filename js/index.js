@@ -84,10 +84,12 @@ $('.login-page').mousedown(function(e) {
           y = $(document).height() - $('.login-page').outerHeight(true);
       }
 
-      $('.login-page').css({
+      if(distenceX < ($(".loginBox").position().left) || distenceY < ($(".loginBox").position().top) ) {
+        $('.login-page').css({
           'left': x + 'px',
           'top': y + 'px'
-      });
+        });
+      }
   });
 
   $(document).mouseup(function() {
