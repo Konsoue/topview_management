@@ -34,7 +34,7 @@ header img {
 .avatar {
   width: 2.5%;
   height: 63%;
-  border: gray 3px solid;
+  /*border: gray 3px solid;*/
   border-radius: 50%;
   text-align: center;
   margin-top: 8px;
@@ -310,6 +310,7 @@ header img {
   flex-direction: row;
   align-items: center;
   border-bottom: #ccc solid 1px;
+  position: relative;
 }
 
 .interview-top:hover.interview-top ul {
@@ -322,6 +323,12 @@ header img {
   line-height: 45px;
   font-size: 27px;
   border-bottom: blue solid 2px;
+}
+
+.icon-box {
+  position: absolute;
+  right: 50px;
+  cursor: pointer;
 }
 
 /*顶部分组*/

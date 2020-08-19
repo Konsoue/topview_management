@@ -61,3 +61,20 @@ a {
 .clearfix {
   *zoom: 1
 }
+
+/*icon的引用*/
+@font-face {
+  font-family: 'iconfont';  /* project id 2016705 */
+  src: url('//at.alicdn.com/t/font_2016705_uacb31t4cxj.eot');
+  src: url('//at.alicdn.com/t/font_2016705_uacb31t4cxj.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_2016705_uacb31t4cxj.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_2016705_uacb31t4cxj.woff') format('woff'),
+  url('//at.alicdn.com/t/font_2016705_uacb31t4cxj.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_2016705_uacb31t4cxj.svg#iconfont') format('svg');
+}
+
+.icon {
+  font-family: 'iconfont';
+  font-size: 38px;
+  line-height: 38px;
+}
