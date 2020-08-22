@@ -271,15 +271,32 @@
           <!--面试时间表单-->
           <form action="">
             <h1>XX组发布面试</h1>
-            <p>最大面试人数：</p>
-            <input type="number">
-            <p>开始时间：</p>
-            <input type="time" name="startTime" >
-            <p>结束时间：</p>
-            <input type="time" name="endTime" >
-            <input type="submit" value="确认" class="output-interview">
+            <span class="input-action ">
+              <input class="input-base " act="1" type="number" id="input-1" />
+              <label class="input-label " for="input-1">
+                  <span class="input-label-content ">最大面试人数:</span>
+              </label>
+            </span>
+            <span class="input-action ">
+              <input class="input-base " act="0" type="date" id="input-2" />
+              <label class="input-label " for="input-2">
+                  <span class="input-label-content ">选择日期:</span>
+              </label>
+            </span>
+            <span class="input-action ">
+              <input class="input-base " act="0" type="time" id="input-3" />
+              <label class="input-label " for="input-3">
+                  <span class="input-label-content ">开始时间:</span>
+              </label>
+            </span>
+            <span class="input-action ">
+              <input class="input-base " act="1" type="time" id="input-4" />
+              <label class="input-label " for="input-4">
+                  <span class="input-label-content ">结束时间:</span>
+              </label>
+            </span>
+            <input type="submit" value="确认" class="output-interview">   
           </form>
-
           <!--已安排面试时间-->
           <div class="interview-page">
             <h3>已安排面试时间</h3>
@@ -292,7 +309,6 @@
               <li>123</li>
             </ul>
           </div>
-
         </div>
       </div>
     </div>
@@ -303,6 +319,7 @@
   <script src="js/jquery-3.5.1.min.js"></script>
   <script src="js/index.js"></script>
   <script src="js/students_mes.js"></script>
+  <script src="js/interview.js"></script>
 </body>
 
 </html>
