@@ -33,6 +33,11 @@ $('.students thead tr').on('mousedown', '.move-loc', function (e) {
 
 /* 学生信息全选 */
 /* @author: 陈泳充 */
+/* @params:
+  ctrlSure, shiftSure 用于判断是否按下ctrl 或 shfit键
+  checkArr 用于记录选中的项
+  shiftFirst 用于记录按shift选择时的初始位置
+*/
 let [ctrlSure, shiftSure] = [0, 0];
 let checkArr = [];
 let shiftFirst = null;
@@ -81,26 +86,6 @@ $('.main-enroll .students tbody').on("click", "tr", function () {
   }
 })
 
-/* 模拟登录 */
-/* @author: 陈泳充 */
-
-$.ajax({
-  url: "https://server1.backend.topviewclub.cn/api/login",
-  type: "POST",
-  dataType: "json",
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  data: JSON.stringify({
-    username: 'topview',
-    password: 'topview'
-  }),
-  success: function (data) {
-    $.cookie('token', data.data.token, {
-      expires: data.data.expireTime
-    });
-  }
-})
 
 /* 加载学生信息 */
 /* @author: 陈泳充 */
@@ -110,14 +95,15 @@ $.ajax({
   pageNum是总页数
   sInputValue是搜索框内容
   studentsDetails用于记录学生的个人介绍、技能、工作室了解等信息
+  sStatus用于记录状态
 */
 let page = null;
 let group = null;
 let pageNum = null;
 let sInputValue = "";
 let studentsDetails = [];
-const setStudentsMes = (current, size, sName = "", sNumber = "", group = null) => {
-  // console.log([current, size, sName, sNumber, group])
+let sStatus = null;
+const setStudentsMes = (current, size, sName = "", sNumber = "", group = null, sStatus = null) => {
   $.ajax({
     url: "https://server1.backend.topviewclub.cn/api/admin/selectStudentInfo",
     type: "POST",
@@ -131,7 +117,8 @@ const setStudentsMes = (current, size, sName = "", sNumber = "", group = null) =
       "size": size,
       "name": sName,
       "studentNumber": sNumber,
-      "groupId": group
+      "groupId": group,
+      "status": sStatus
     }),
     success: function (data) {
       // 更新 page 和 studentsDetails
@@ -194,13 +181,16 @@ $('.main-enroll .students tbody').on("click", "tr a", function (e) {
   $(".students-details .content .introduction p").html(details["introduction"]);
   $(".students-details .content .skill p").html(details["skill"]);
   $(".students-details .content .impression p").html(details["impression"]);
+
   $(".students-details").fadeIn(200);
-  $(".students-details .content").on("click", function (e) {
-    e.stopPropagation();
-  })
-  $(".students-details").one("click", function () {
-    $(".students-details").fadeOut(200)
-  })
+
+  function temp(e) {
+    if (e.target.getAttribute("class") === "students-details") {
+      $(".students-details").fadeOut(200);
+      $(".students-details").off("click", temp);
+    }
+  }
+  $(".students-details").on("click", temp);
 })
 
 /* 下拉框筛选学生*/
@@ -219,7 +209,20 @@ $(".main-enroll .head #groups").on("click", function () {
     return;
   }
   group = groupIds[value];
-  isNaN(sInputValue) ? setStudentsMes(1, 12, sInputValue, "", group) : setStudentsMes(1, 12, "", sInputValue, group);
+  isNaN(sInputValue) ? setStudentsMes(1, 12, sInputValue, "", group, sStatus) : setStudentsMes(1, 12, "", sInputValue, group, sStatus);
+})
+$(".main-enroll .head #status").on("click", function () {
+  let value = $(this).find("option:selected").val();
+  let statusArr = {
+    "全部": null,
+    "未通过": 0,
+    "已通过": 1,
+  }
+  if (statusArr[value] === sStatus) {
+    return;
+  }
+  sStatus = statusArr[value];
+  isNaN(sInputValue) ? setStudentsMes(1, 12, sInputValue, "", group, sStatus) : setStudentsMes(1, 12, "", sInputValue, group, sStatus);
 })
 
 /* 模糊搜索学生 */
@@ -231,7 +234,7 @@ $(".main-enroll .head input").one("focus", function () {
       let value = $(".main-enroll .head input").val().trim();
       if (e.keyCode === 13) {
         flag = 1;
-        isNaN(value) ? setStudentsMes(1, 12, value, "", group) : setStudentsMes(1, 12, "", value, group);
+        isNaN(value) ? setStudentsMes(1, 12, value, "", group, sStatus) : setStudentsMes(1, 12, "", value, group, sStatus);
         sInputValue = value;
       }
     },
@@ -239,7 +242,7 @@ $(".main-enroll .head input").one("focus", function () {
       let value = $(".main-enroll .head input").val().trim();
       if (e.keyCode === 8) {
         if (!value && flag === 1) {
-          setStudentsMes(1, 12, "", "", group);
+          setStudentsMes(1, 12, "", "", group, sStatus);
           flag = 0;
           sInputValue = "";
         }
@@ -277,6 +280,6 @@ $('.main-enroll .pages .page').on("click", "li", function () {
     } else {
       page = $(this).index();
     }
-    isNaN(sInputValue) ? setStudentsMes(page, 12, sInputValue, "", group) : setStudentsMes(page, 12, "", sInputValue, group);
+    isNaN(sInputValue) ? setStudentsMes(page, 12, sInputValue, "", group, sStatus) : setStudentsMes(page, 12, "", sInputValue, group, sStatus);
   }
 })
