@@ -43,18 +43,32 @@
     </ul>
   </div>
 
+  <!-- 学生细节展示 -->
+  <div class="students-details">
+    <div class="content">
+      <div class="name">
+        <span></span>
+      </div>
+      <div class="introduction">
+        <span>个人介绍</span>
+        <p></p>
+      </div>
+      <div class="skill">
+        <span>掌握技能</span>
+        <p></p>
+      </div>
+      <div class="impression">
+        <span>对工作室的了解</span>
+        <p></p>
+      </div>
+    </div>
+  </div>
   <!-- 右边部分 -->
   <div class="main">
     <!-- 陈泳充部分 报名情况详情页 开始 -->
     <div class="main-enroll">
       <!-- 头部工具栏 -->
       <div class="head">
-        性别:
-        <select id="sex">
-          <option value="全部">全部</option>
-          <option value="男">男</option>
-          <option value="女">女</option>
-        </select>
         组别:
         <select id="groups">
           <option value="全部">全部</option>
@@ -70,7 +84,7 @@
           <option value="已通过">已通过</option>
           <option value="未通过">未通过</option>
         </select>
-        <input type="text" placeholder="按姓名或学号搜索">
+        <input type="text" placeholder="输入姓名或学号，Enter搜索">
         <span class="confirm-change">确定修改</span>
       </div>
       <!-- 学生信息 -->
@@ -90,72 +104,16 @@
             </tr>
           </thead>
           <!-- 分栏 -->
-          <tbody>
-            <tr>
-              <th>张三</th>
-              <th>男</th>
-              <th>计算机学院</th>
-              <th>3119000000</th>
-              <th>前端</th>
-              <th>13700000000</th>
-              <th>未通过</th>
-              <th><a href="javascript:;">点击查看</a></th>
-            </tr>
-            <tr>
-              <th>张三</th>
-              <th>男</th>
-              <th>计算机学院</th>
-              <th>3119000000</th>
-              <th>前端</th>
-              <th>13700000000</th>
-              <th>未通过</th>
-              <th><a href="javascript:;">点击查看</a></th>
-            </tr>
-            <tr>
-              <th>张三</th>
-              <th>男</th>
-              <th>计算机学院</th>
-              <th>3119000000</th>
-              <th>前端</th>
-              <th>13700000000</th>
-              <th>未通过</th>
-              <th><a href="javascript:;">点击查看</a></th>
-            </tr>
-            <tr>
-              <th>张三</th>
-              <th>男</th>
-              <th>计算机学院</th>
-              <th>3119000000</th>
-              <th>前端</th>
-              <th>13700000000</th>
-              <th>未通过</th>
-              <th><a href="javascript:;">点击查看</a></th>
-            </tr>
-            <tr>
-              <th>张三</th>
-              <th>男</th>
-              <th>计算机学院</th>
-              <th>3119000000</th>
-              <th>前端</th>
-              <th>13700000000</th>
-              <th>未通过</th>
-              <th><a href="javascript:;">点击查看</a></th>
-            </tr>
-            <tr>
-              <th>张三</th>
-              <th>男</th>
-              <th>计算机学院</th>
-              <th>3119000000</th>
-              <th>前端</th>
-              <th>13700000000</th>
-              <th>未通过</th>
-              <th><a href="javascript:;">点击查看</a></th>
-            </tr>
-          </tbody>
+          <tbody></tbody>
         </table>
       </div>
-      <div class="pages">这地方留着做分页按钮</div>
+      <div class="pages">
+        <span class="total"></span>
+        <ul class="page"></ul>
+      </div>
     </div>
+
+
     <!-- 陈泳充部分结束 -->
 
     <!--黄创境部分 面试排号详情页 开始-->
@@ -273,28 +231,28 @@
             <span class="input-action ">
               <input class="input-base " act="1" type="number" id="input-1" />
               <label class="input-label " for="input-1">
-                  <span class="input-label-content ">最大面试人数:</span>
+                <span class="input-label-content ">最大面试人数:</span>
               </label>
             </span>
             <span class="input-action ">
               <input class="input-base " act="0" type="date" id="input-2" />
               <label class="input-label " for="input-2">
-                  <span class="input-label-content ">选择日期:</span>
+                <span class="input-label-content ">选择日期:</span>
               </label>
             </span>
             <span class="input-action ">
               <input class="input-base " act="0" type="time" id="input-3" />
               <label class="input-label " for="input-3">
-                  <span class="input-label-content ">开始时间:</span>
+                <span class="input-label-content ">开始时间:</span>
               </label>
             </span>
             <span class="input-action ">
               <input class="input-base " act="1" type="time" id="input-4" />
               <label class="input-label " for="input-4">
-                  <span class="input-label-content ">结束时间:</span>
+                <span class="input-label-content ">结束时间:</span>
               </label>
             </span>
-            <input type="submit" value="确认" class="output-interview">   
+            <input type="submit" value="确认" class="output-interview">
           </form>
           <!--已安排面试时间-->
           <div class="interview-page">
@@ -316,6 +274,7 @@
 
   <!-- 引入js -->
   <script src="js/jquery-3.5.1.min.js"></script>
+  <script src="js/jquery.cookie.min.js"></script>
   <script src="js/index.js"></script>
   <script src="js/students_mes.js"></script>
   <script src="js/interview.js"></script>
