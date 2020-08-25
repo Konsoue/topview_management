@@ -285,15 +285,100 @@ header img {
 .main-enroll .students tbody .checked {
   background-color: #EFEFEF;
 }
+
 .main-enroll .students tbody tr th a:hover {
   color: red;
   cursor: pointer;
 }
 
 .main-enroll .pages {
+  position: relative;
   width: 100%;
-  height: 50px;
-  background-color: pink;
+  height: 30px;
+  line-height: 30px;
+}
+
+.main-enroll .pages .page {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 30px;
+}
+
+.main-enroll .pages .page li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  margin: 0 10px;
+  width: 30px;
+  height: 30px;
+  font-weight: 400;
+}
+
+.main-enroll .page .mouse-enter {
+  border: 1px solid #BEBFC2;
+  background-color: #ECEDF1;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.main-enroll .page .current {
+  text-decoration: underline;
+  color: #C92F68;
+}
+
+.students-details {
+  display: none;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10000000;
+  background-color: rgba(10, 10, 10, .2);
+}
+
+.students-details .content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  width: 350px;
+  height: 80vh;
+  background-color: #fff;
+  overflow: auto;
+}
+
+.students-details .content div {
+  margin-bottom: 50px;
+}
+
+.students-details .content div:nth-child(1) {
+  border-bottom: 1px solid #000;
+}
+
+.students-details .content span {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.students-details .content div:nth-child(1) span {
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.students-details .content p {
+  padding: 20px 0;
+  width: 100%;
+  border: 1px solid #ccc;
+  text-decoration: underline;
+  text-indent: 2em;
+  user-select: text;
 }
 
 /* 陈泳充部分结束 */
@@ -446,16 +531,16 @@ header img {
   cursor: pointer;
 }
 
-.interview-right .output-interview { 
+.interview-right .output-interview {
   cursor: pointer;
   display: block;
-  margin: 0 auto ;
+  margin: 0 auto;
   margin-top: 50px;
   font-size: 25px;
   font-weight: 500;
   font-family: 微软雅黑;
   width: auto;
-  padding:10px 30px;
+  padding: 10px 30px;
   height: 50px;
   line-height: 20px;
   border: 2px solid #6a7989;
@@ -472,12 +557,12 @@ header img {
   width: 100%;
 }
 
-.input-base { 
+.input-base {
   font-size: 20px;
   width: 100%;
   height: 50px;
   padding: 0px 10px;
-  box-sizing:border-box;
+  box-sizing: border-box;
   position: relative;
   display: block;
   border: none;
@@ -485,7 +570,7 @@ header img {
   background: #f0f0f0;
   color: black;
   opacity: 0;
-	-webkit-transition: opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s;
   border: 2px solid #6a7989;
   border-top: none;
@@ -508,70 +593,70 @@ header img {
   line-height: 50px;
   width: 100%;
   -webkit-transition: -webkit-transform 0.3s 0.3s;
-	transition: transform 0.3s 0.3s;
+  transition: transform 0.3s 0.3s;
 }
 
 .input-label::before,
 .input-label::after {
   content: '';
   position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	-webkit-transition: -webkit-transform 0.3s;
-	transition: transform 0.3s;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-transition: -webkit-transform 0.3s;
+  transition: transform 0.3s;
 }
 
 .input-label::before {
-	border-top: 2px solid #6a7989;
-	-webkit-transform: translate3d(0, 100%, 0) translate3d(0, -2px, 0);
-	transform: translate3d(0, 100%, 0) translate3d(0, -2px, 0);
-	-webkit-transition-delay: 0.3s;
-	transition-delay: 0.3s;
+  border-top: 2px solid #6a7989;
+  -webkit-transform: translate3d(0, 100%, 0) translate3d(0, -2px, 0);
+  transform: translate3d(0, 100%, 0) translate3d(0, -2px, 0);
+  -webkit-transition-delay: 0.3s;
+  transition-delay: 0.3s;
 }
 
 .input-label::after {
-	z-index: -1;
-	background: #ccc;
-	-webkit-transform: scale3d(1, 0, 1);
-	transform: scale3d(1, 0, 1);
-	-webkit-transform-origin: 50% 0%;
-	transform-origin: 50% 0%;
+  z-index: -1;
+  background: #ccc;
+  -webkit-transform: scale3d(1, 0, 1);
+  transform: scale3d(1, 0, 1);
+  -webkit-transform-origin: 50% 0%;
+  transform-origin: 50% 0%;
 }
 
 /*表单动画*/
 .input-base:focus {
   outline: none;
-	-webkit-transition-delay: 0.3s;
+  -webkit-transition-delay: 0.3s;
   transition-delay: 0.3s;
-  opacity: 1 !important; 
+  opacity: 1 !important;
 }
 
-.input-base:focus + .input-label .input-label-content {
-	-webkit-transform: translate3d(0, -80%, 0);
-	transform: translate3d(0, -80%, 0);
-	-webkit-transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
-	transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+.input-base:focus+.input-label .input-label-content {
+  -webkit-transform: translate3d(0, -80%, 0);
+  transform: translate3d(0, -80%, 0);
+  -webkit-transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+  transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
 }
 
-.input-base:focus + .input-label::before {
-	-webkit-transition-delay: 0s;
-	transition-delay: 0s;
+.input-base:focus+.input-label::before {
+  -webkit-transition-delay: 0s;
+  transition-delay: 0s;
 }
 
-.input-base:focus + .input-label::before {
-	-webkit-transform: translate3d(0, 0, 0);
-	transform: translate3d(0, 0, 0);
+.input-base:focus+.input-label::before {
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
 }
 
-.input-base:focus + .input-label::after{
-	-webkit-transform: scale3d(1, 1, 1);
-	transform: scale3d(1, 1, 1);
-	-webkit-transition-delay: 0.3s;
-	transition-delay: 0.3s;
-	-webkit-transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
-	transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+.input-base:focus+.input-label::after {
+  -webkit-transform: scale3d(1, 1, 1);
+  transform: scale3d(1, 1, 1);
+  -webkit-transition-delay: 0.3s;
+  transition-delay: 0.3s;
+  -webkit-transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+  transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
 }
 
 /*发布面试情况*/

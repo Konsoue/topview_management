@@ -81,9 +81,202 @@ $('.main-enroll .students tbody').on("click", "tr", function () {
   }
 })
 
+/* 模拟登录 */
+/* @author: 陈泳充 */
+
+$.ajax({
+  url: "https://server1.backend.topviewclub.cn/api/login",
+  type: "POST",
+  dataType: "json",
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  data: JSON.stringify({
+    username: 'topview',
+    password: 'topview'
+  }),
+  success: function (data) {
+    $.cookie('token', data.data.token, {
+      expires: data.data.expireTime
+    });
+  }
+})
+
+/* 加载学生信息 */
+/* @author: 陈泳充 */
+/* @params:
+  page用于记录当前页数,
+  group用于记录当前组别
+  pageNum是总页数
+  sInputValue是搜索框内容
+  studentsDetails用于记录学生的个人介绍、技能、工作室了解等信息
+*/
+let page = null;
+let group = null;
+let pageNum = null;
+let sInputValue = "";
+let studentsDetails = [];
+const setStudentsMes = (current, size, sName = "", sNumber = "", group = null) => {
+  // console.log([current, size, sName, sNumber, group])
+  $.ajax({
+    url: "https://server1.backend.topviewclub.cn/api/admin/selectStudentInfo",
+    type: "POST",
+    dateType: 'json',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': $.cookie('token')
+    },
+    data: JSON.stringify({
+      "current": current,
+      "size": size,
+      "name": sName,
+      "studentNumber": sNumber,
+      "groupId": group
+    }),
+    success: function (data) {
+      // 更新 page 和 studentsDetails
+      page = data.data.current;
+      studentsDetails = [];
+      // 加载数据条数
+      $('.main-enroll .pages .total').html(`已加载 ${data.data.total} 条数据`);
+      // 加载分页页面
+      if (data.data.total) {
+        pageNum = data.data.pages;
+        let pageCon = '<li>《</li>';
+        for (let i = 0; i < pageNum; i++) {
+          pageCon += data.data.current === i + 1 ? `<li class='current'>${i + 1}</li>` : `<li>${i + 1}</li>`;
+        }
+        pageCon += '<li>》</li>';
+        $('.main-enroll .pages .page').html(pageCon);
+      } else {
+        $('.main-enroll .pages .page').html("");
+      }
+      // 加载学生信息
+      let arr = data.data.records
+      let len = arr.length;
+      let studentCon = ''
+      for (let i = 0; i < len; i++) {
+        studentCon +=
+          `<tr>
+              <th>${arr[i]["name"]}</th>
+              <th>${arr[i]["sex"] === 0 ? '男' : '女'}</th>
+              <th>${arr[i]["collegeName"]}</th>
+              <th>${arr[i]["studentNumber"]}</th>
+              <th>${arr[i]["groupName"]}</th>
+              <th>${arr[i]["phone"]}</th>
+              <th>${arr[i]["status"] === 0 ? '未通过' : '已通过'}</th>
+              <th><a href="javascript:void(0)">点击查看</a></th>
+            </tr>`;
+        studentsDetails.push({
+          name: arr[i]["name"],
+          introduction: arr[i]["introduction"],
+          skill: arr[i]["skill"],
+          impression: arr[i]["impression"]
+        })
+      }
+      $('.main-enroll .students tbody').html("");
+      $('.main-enroll .students tbody').html(studentCon);
+    },
+  })
+}
+
+setTimeout(function () {
+  setStudentsMes(1, 12);
+}, 2000)
+
 
 /* 查看学生其他信息 */
+/* @author: 陈泳充 */
 $('.main-enroll .students tbody').on("click", "tr a", function (e) {
   e.stopPropagation()
-  // 等接口
+  let details = studentsDetails[$(this).parent().parent().index()];
+  $(".students-details .content .name span").html(details["name"]);
+  $(".students-details .content .introduction p").html(details["introduction"]);
+  $(".students-details .content .skill p").html(details["skill"]);
+  $(".students-details .content .impression p").html(details["impression"]);
+  $(".students-details").fadeIn(200);
+  $(".students-details .content").on("click", function (e) {
+    e.stopPropagation();
+  })
+  $(".students-details").one("click", function () {
+    $(".students-details").fadeOut(200)
+  })
+})
+
+/* 下拉框筛选学生*/
+/* @author: 陈泳充 */
+$(".main-enroll .head #groups").on("click", function () {
+  let value = $(this).find("option:selected").val();
+  let groupIds = {
+    "全部": null,
+    "前端": 1,
+    "后台": 2,
+    "安卓": 3,
+    "IOS": 4,
+    "机器学习": 5
+  }
+  if (groupIds[value] === group) {
+    return;
+  }
+  group = groupIds[value];
+  isNaN(sInputValue) ? setStudentsMes(1, 12, sInputValue, "", group) : setStudentsMes(1, 12, "", sInputValue, group);
+})
+
+/* 模糊搜索学生 */
+/* @author: 陈泳充 */
+$(".main-enroll .head input").one("focus", function () {
+  let flag = 0;
+  $("body").on({
+    "keydown": function (e) {
+      let value = $(".main-enroll .head input").val().trim();
+      if (e.keyCode === 13) {
+        flag = 1;
+        isNaN(value) ? setStudentsMes(1, 12, value, "", group) : setStudentsMes(1, 12, "", value, group);
+        sInputValue = value;
+      }
+    },
+    "keyup": function (e) {
+      let value = $(".main-enroll .head input").val().trim();
+      if (e.keyCode === 8) {
+        if (!value && flag === 1) {
+          setStudentsMes(1, 12, "", "", group);
+          flag = 0;
+          sInputValue = "";
+        }
+      }
+    }
+  })
+});
+
+/* 分页 */
+/* @author: 陈泳充 */
+$('.main-enroll .pages .page').on("mouseenter", "li", function () {
+  if ((page === 1 && $(this).index() === 0) || (page === pageNum && $(this).index() === pageNum + 1)) {
+    return;
+  }
+  if ($(this).attr('class') !== "current") {
+    $(this).addClass("mouse-enter");
+  }
+  $('.main-enroll .pages .page').one("mouseout", "li", function () {
+    $(this).removeClass("mouse-enter");
+  })
+})
+
+
+$('.main-enroll .pages .page').on("click", "li", function () {
+  if ((page === 1 && $(this).index() === 0) || (page === pageNum && $(this).index() === pageNum + 1)) {
+    return;
+  }
+  if ($(this).attr('class') === "mouse-enter") {
+    if ($(this).index() === 0) {
+      page -= 1;
+      page = page < 1 ? 1 : page;
+    } else if ($(this).index() === pageNum + 1) {
+      page += 1;
+      page = page > pageNum ? pageNum : page;
+    } else {
+      page = $(this).index();
+    }
+    isNaN(sInputValue) ? setStudentsMes(page, 12, sInputValue, "", group) : setStudentsMes(page, 12, "", sInputValue, group);
+  }
 })
