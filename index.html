@@ -154,70 +154,17 @@
                   <th>序号<span></span></th>
                   <th>姓名<span></span></th>
                   <th>性别<span></span></th>
-                  <th>学院<span></span></th>
+                  <th>状态<span></span></th>
                   <th>学号<span></span></th>
                   <th>手机号<span></span></th>
-                  <th>状态</th>
+                  <th>学院</th>
                 </tr>
               </thead>
               <!-- 分栏 -->
-              <tbody>
-                <tr>
-                  <th>1</th>
-                  <th>张三</th>
-                  <th>男</th>
-                  <th>计算机学院</th>
-                  <th>3119000000</th>
-                  <th>13700000000</th>
-                  <th>未面试</th>
-                </tr>
-                <tr>
-                  <th>1</th>
-                  <th>张三</th>
-                  <th>男</th>
-                  <th>计算机学院</th>
-                  <th>3119000000</th>
-                  <th>13700000000</th>
-                  <th>未面试</th>
-                </tr>
-                <tr>
-                  <th>1</th>
-                  <th>张三</th>
-                  <th>男</th>
-                  <th>计算机学院</th>
-                  <th>3119000000</th>
-                  <th>13700000000</th>
-                  <th>未面试</th>
-                </tr>
-                <tr>
-                  <th>1</th>
-                  <th>张三</th>
-                  <th>男</th>
-                  <th>计算机学院</th>
-                  <th>3119000000</th>
-                  <th>13700000000</th>
-                  <th>未面试</th>
-                </tr>
-                <tr>
-                  <th>1</th>
-                  <th>张三</th>
-                  <th>男</th>
-                  <th>计算机学院</th>
-                  <th>3119000000</th>
-                  <th>13700000000</th>
-                  <th>未面试</th>
-                </tr>
-                <tr>
-                  <th>1</th>
-                  <th>张三</th>
-                  <th>男</th>
-                  <th>计算机学院</th>
-                  <th>3119000000</th>
-                  <th>13700000000</th>
-                  <th>未面试</th>
-                </tr>
-              </tbody>
+              <tbody></tbody>
             </table>
+
+            <h1 class="nonetime">还没到时间呢</h1>
 
           </div>
         </div>
@@ -227,44 +174,40 @@
 
           <!--面试时间表单-->
           <form action="">
-            <h1>XX组发布面试</h1>
+            <h1><span class="groupname">XX</span>组</h1>
+            <h2>发布面试</h2>
             <span class="input-action ">
-              <input class="input-base " act="1" type="number" id="input-1" />
+              <input class="input-base " inputid="0" type="number" id="input-1" />
               <label class="input-label " for="input-1">
                 <span class="input-label-content ">最大面试人数:</span>
               </label>
             </span>
             <span class="input-action ">
-              <input class="input-base " act="0" type="date" id="input-2" />
+              <input class="input-base " inputid="1" type="date" id="input-2" />
               <label class="input-label " for="input-2">
                 <span class="input-label-content ">选择日期:</span>
               </label>
             </span>
             <span class="input-action ">
-              <input class="input-base " act="0" type="time" id="input-3" />
+              <input class="input-base " inputid="2" type="time" id="input-3" />
               <label class="input-label " for="input-3">
                 <span class="input-label-content ">开始时间:</span>
               </label>
             </span>
             <span class="input-action ">
-              <input class="input-base " act="1" type="time" id="input-4" />
+              <input class="input-base " inputid="3" type="time" id="input-4" />
               <label class="input-label " for="input-4">
                 <span class="input-label-content ">结束时间:</span>
               </label>
             </span>
-            <input type="submit" value="确认" class="output-interview">
+            <input type="button" value="确认" class="output-interview">
           </form>
           <!--已安排面试时间-->
           <div class="interview-page">
             <h3>已安排面试时间</h3>
-            <ul class="page-time">
-              <li>10:00-12:00</li>
-              <li>10:00-12:00</li>
-              <li>10:00-12:00</li>
-              <li>123</li>
-              <li>123</li>
-              <li>123</li>
-            </ul>
+            <ul class="page-time"></ul>
+            <p>日期-时间-报名人数</p>
+            <p>点击出现删除按钮</p>
           </div>
         </div>
       </div>

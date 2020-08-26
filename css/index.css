@@ -429,9 +429,16 @@ header img {
   margin-left: 20px;
   /*display: flex;*/
   justify-content: space-around;
+  /*CSS3淡入淡出动画*/
+  animation-name: fadein; 
+  animation-duration: 0.3s; 
+  animation-iteration-count: 1; 
+  animation-delay: 0s;
 }
 
+
 .interview-top ul li {
+  transition: all 0.5s;
   cursor: pointer;
   height: 45px;
   line-height: 45px;
@@ -482,6 +489,29 @@ header img {
   font-weight: 500;
 }
 
+.interview-left table tbody tr:hover {
+  background-color: #F8F8F8;
+}
+
+.interview-left table tbody tr th[studentid] {
+  transition: all 0.5s;
+  cursor: pointer;
+}
+
+.interview-left table tbody tr th a {
+  color: red;
+}
+
+.interview-left table tbody tr th[studentid]:hover {
+  box-shadow: 0px 0px 5px #808080;
+}
+
+.interview-left .nonetime {
+  display: none;
+  text-align: center;
+  margin: 40px;
+}
+
 /*滑动条样式*/
 .interview-left::-webkit-scrollbar {
   width: 4px;
@@ -502,6 +532,10 @@ header img {
   text-align: center;
   background-color: white;
   border-left: 1px solid #ccc;
+}
+
+.groupname {
+  color: #888a8a;
 }
 
 /*滑动条样式*/
@@ -675,15 +709,58 @@ header img {
   overflow: auto;
 }
 
-.interview-right .interview-page ul li {
+.interview-right .interview-page ul .page-time-item {
+  position: relative;
+  width: 100%;
   border-top: 1px #F8F8F8 solid;
   height: 40px;
   line-height: 40px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.interview-right .interview-page ul li:first-child {
+  border-top:none;
 }
 
 .interview-right .interview-page ul li:hover {
   background-color: #F8F8F8;
   cursor: pointer;
+}
+
+.time-first {
+  padding: 0 5px;
+  background-color: #6a7989;
+  border-right: 1px solid #F8F8F8;
+  color:white ;
+}
+
+.time-last {
+  padding: 0 5px;
+  width: 35px;
+  border-left: 1px solid #aaa;
+}
+
+.time-delete {
+  display: none;
+  transition: all 0.3s;
+  text-align: center;
+  background-color: rgba(255, 0, 0, 0.5);
+  color: white;
+  border: none;
+  cursor: pointer;
+  height: 40px;
+  line-height: 40px;
+}
+
+.time-delete p {
+  font-size: large;
+  width: 100%;
+  text-align: center;
+}
+
+.time-delete:hover {
+  background-color: red !important;
 }
 
 /*滑动条样式*/
@@ -696,6 +773,19 @@ header img {
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
   -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
   background: rgba(0, 0, 0, 0.2);
+}
+
+/*定义淡出动画*/
+@keyframes fadein {
+  0%{
+    opacity: 0;     
+  }
+  50% {
+    opacity: 0; 
+  }
+  100% {
+    opacity: 1; 
+  }
 }
 
 /*黄创境部分结束*/

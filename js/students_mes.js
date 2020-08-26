@@ -105,7 +105,7 @@ let studentsDetails = [];
 let sStatus = null;
 const setStudentsMes = (current, size, sName = "", sNumber = "", group = null, sStatus = null) => {
   $.ajax({
-    url: "https://server1.backend.topviewclub.cn/api/admin/selectStudentInfo",
+    url: "/api/admin/selectStudentInfo",
     type: "POST",
     dateType: 'json',
     headers: {
@@ -129,11 +129,11 @@ const setStudentsMes = (current, size, sName = "", sNumber = "", group = null, s
       // 加载分页页面
       if (data.data.total) {
         pageNum = data.data.pages;
-        let pageCon = '<li>《</li>';
+        let pageCon = '<li class="icon">&#xe744</li>';
         for (let i = 0; i < pageNum; i++) {
           pageCon += data.data.current === i + 1 ? `<li class='current'>${i + 1}</li>` : `<li>${i + 1}</li>`;
         }
-        pageCon += '<li>》</li>';
+        pageCon += '<li class="icon">&#xe743</li>';
         $('.main-enroll .pages .page').html(pageCon);
       } else {
         $('.main-enroll .pages .page').html("");
