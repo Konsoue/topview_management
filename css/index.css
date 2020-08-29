@@ -12,9 +12,15 @@ header {
   top: 0;
   left: 0;
   width: 100%;
+<<<<<<< HEAD
   height: 66px;
   background-color: rgb(204, 204, 204);
   z-index: 100;
+=======
+  height: 60px;
+  background-color: rgb(204, 204, 204);
+  z-index: 10;
+>>>>>>> d730b9799d14fe57a99cee1a5eb8d260ef393fe3
   display: flex;
   justify-content: space-between;
 }
@@ -44,6 +50,7 @@ header img {
   line-height: 35px;
   position: relative;
   right: 10%;
+<<<<<<< HEAD
   top: 10%;
 }
 
@@ -51,6 +58,12 @@ header img {
   color: #555;
   position: relative;
   font-size: 45px;
+=======
+}
+
+.avatar img {
+  height: 75%;
+>>>>>>> d730b9799d14fe57a99cee1a5eb8d260ef393fe3
 }
 
 .login-page {
@@ -60,7 +73,11 @@ header img {
   width: 450px;
   height: 400px;
   background-color: #f5f5f5;
+<<<<<<< HEAD
   z-index: 30;
+=======
+  z-index: 2;
+>>>>>>> d730b9799d14fe57a99cee1a5eb8d260ef393fe3
   border-radius: 5px;
   overflow: hidden;
   text-align: center;
@@ -107,7 +124,11 @@ header img {
   cursor: pointer;
   outline: none;
   background-color: #888a8a;
+<<<<<<< HEAD
   transition: 0.2s;
+=======
+  transition: 0.3s;
+>>>>>>> d730b9799d14fe57a99cee1a5eb8d260ef393fe3
 }
 
 .login-page button:hover {
@@ -115,6 +136,7 @@ header img {
   background-color: #eca998;
 }
 
+<<<<<<< HEAD
 .login-page #login-tip{
   color: #eca998;
   font-size: 15px;
@@ -152,6 +174,8 @@ header img {
   line-height: 720px;
   font-size: 60px;
 }
+=======
+>>>>>>> d730b9799d14fe57a99cee1a5eb8d260ef393fe3
 /* end */
 
 /* 左边部分开始 */
@@ -237,7 +261,11 @@ header img {
 }
 
 .main-enroll .head input,
+<<<<<<< HEAD
 .main-enroll .head .confirm-change {
+=======
+.main-enroll .head .change {
+>>>>>>> d730b9799d14fe57a99cee1a5eb8d260ef393fe3
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -251,7 +279,11 @@ header img {
   border: 1px solid #aaa;
 }
 
+<<<<<<< HEAD
 .main-enroll .head .confirm-change {
+=======
+.main-enroll .head .change {
+>>>>>>> d730b9799d14fe57a99cee1a5eb8d260ef393fe3
   right: 20px;
   width: 75px;
   height: 25px;
@@ -296,8 +328,16 @@ header img {
 .main-enroll .students thead th:first-child {
   border-left: none;
 }
+<<<<<<< HEAD
 
 .main-enroll .students thead th:last-child {
+=======
+.main-enroll .students thead th:nth-child(8) {
+  border-right: none;
+}
+.main-enroll .students thead th:last-child {
+  border-left: none;
+>>>>>>> d730b9799d14fe57a99cee1a5eb8d260ef393fe3
   border-right: none;
 }
 
@@ -325,15 +365,206 @@ header img {
 .main-enroll .students tbody .checked {
   background-color: #EFEFEF;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> d730b9799d14fe57a99cee1a5eb8d260ef393fe3
 .main-enroll .students tbody tr th a:hover {
   color: red;
   cursor: pointer;
 }
 
 .main-enroll .pages {
+<<<<<<< HEAD
   width: 100%;
   height: 50px;
   background-color: pink;
+=======
+  position: relative;
+  width: 100%;
+  height: 30px;
+  line-height: 30px;
+}
+
+.main-enroll .pages .page {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 30px;
+}
+
+.main-enroll .pages .page li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  margin: 0 10px;
+  width: 30px;
+  height: 30px;
+  font-weight: 400;
+}
+
+.main-enroll .page .mouse-enter {
+  border: 1px solid #BEBFC2;
+  background-color: #ECEDF1;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.main-enroll .page .current {
+  text-decoration: underline;
+  color: #C92F68;
+}
+
+.students-details {
+  display: none;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
+  background-color: rgba(10, 10, 10, .2);
+}
+
+.students-details .content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  width: 350px;
+  height: 80vh;
+  background-color: #fff;
+  overflow: auto;
+}
+
+.students-details .content div {
+  margin-bottom: 50px;
+}
+
+.students-details .content div:nth-child(1) {
+  border-bottom: 1px solid #000;
+}
+
+.students-details .content span {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.students-details .content div:nth-child(1) span {
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.students-details .content p {
+  padding: 20px 10px;
+  width: 90%;
+  border: 1px solid #ccc;
+  text-decoration: underline;
+  text-indent: 2em;
+  user-select: text;
+}
+
+.change-status {
+  display: none;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
+  background-color: rgba(10, 10, 10, .2);
+}
+
+.change-status .content,
+.change-status .error-mes,
+.change-status .is-change {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.change-status .content {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  background-color: #fff;
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, .35);
+}
+
+.change-status .content ul {
+  width: 100%;
+}
+
+.change-status .content ul li,
+.change-status .cancel {
+  margin: 10px auto;
+  width: 80%;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  cursor: pointer;
+  color: #1B9AF7;
+  border-radius: 10px;
+  border: 1px solid #1B9AF7;
+  transition: all .3s;
+}
+
+.change-status .content ul li:hover {
+  background-color: #1B9AF7;
+  color: #fff;
+}
+
+.change-status .cancel {
+  margin: 0 auto 10px;
+  background-color: #D51D00;
+  color: #fff;
+  border: none;
+}
+
+.change-status .error-mes {
+  width: 200px;
+  height: 100px;
+  line-height: 100px;
+  text-align: center;
+  background-color: #fff;
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, .35);
+}
+
+.change-status .is-change {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  width: 300px;
+  background-color: #fff;
+}
+.change-status .is-change span {
+  display: block;
+  width: 80%;
+}
+.change-status .is-change>div {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  width: 80%;
+}
+.change-status .is-change-yes,
+.change-status .is-change-no {
+  width: 45%;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  color: #fff;
+  border-radius: 10px;
+  background-color: skyblue;
+  cursor: pointer;
+}
+.change-status .is-change-no {
+  background-color: red;
+>>>>>>> d730b9799d14fe57a99cee1a5eb8d260ef393fe3
 }
 
 /* 陈泳充部分结束 */
@@ -384,9 +615,22 @@ header img {
   margin-left: 20px;
   /*display: flex;*/
   justify-content: space-around;
+<<<<<<< HEAD
 }
 
 .interview-top ul li {
+=======
+  /*CSS3淡入淡出动画*/
+  animation-name: fadein;
+  animation-duration: 0.3s;
+  animation-iteration-count: 1;
+  animation-delay: 0s;
+}
+
+
+.interview-top ul li {
+  transition: all 0.5s;
+>>>>>>> d730b9799d14fe57a99cee1a5eb8d260ef393fe3
   cursor: pointer;
   height: 45px;
   line-height: 45px;
@@ -437,6 +681,32 @@ header img {
   font-weight: 500;
 }
 
+<<<<<<< HEAD
+=======
+.interview-left table tbody tr:hover {
+  background-color: #F8F8F8;
+}
+
+.interview-left table tbody tr th[studentid] {
+  transition: all 0.5s;
+  cursor: pointer;
+}
+
+.interview-left table tbody tr th a {
+  color: red;
+}
+
+.interview-left table tbody tr th[studentid]:hover {
+  box-shadow: 0px 0px 5px #808080;
+}
+
+.interview-left .nonetime {
+  display: none;
+  text-align: center;
+  margin: 40px;
+}
+
+>>>>>>> d730b9799d14fe57a99cee1a5eb8d260ef393fe3
 /*滑动条样式*/
 .interview-left::-webkit-scrollbar {
   width: 4px;
@@ -459,6 +729,13 @@ header img {
   border-left: 1px solid #ccc;
 }
 
+<<<<<<< HEAD
+=======
+.groupname {
+  color: #888a8a;
+}
+
+>>>>>>> d730b9799d14fe57a99cee1a5eb8d260ef393fe3
 /*滑动条样式*/
 .interview-right::-webkit-scrollbar {
   width: 4px;
@@ -486,16 +763,27 @@ header img {
   cursor: pointer;
 }
 
+<<<<<<< HEAD
 .interview-right .output-interview { 
   cursor: pointer;
   display: block;
   margin: 0 auto ;
+=======
+.interview-right .output-interview {
+  cursor: pointer;
+  display: block;
+  margin: 0 auto;
+>>>>>>> d730b9799d14fe57a99cee1a5eb8d260ef393fe3
   margin-top: 50px;
   font-size: 25px;
   font-weight: 500;
   font-family: 微软雅黑;
   width: auto;
+<<<<<<< HEAD
   padding:10px 30px;
+=======
+  padding: 10px 30px;
+>>>>>>> d730b9799d14fe57a99cee1a5eb8d260ef393fe3
   height: 50px;
   line-height: 20px;
   border: 2px solid #6a7989;
@@ -512,12 +800,20 @@ header img {
   width: 100%;
 }
 
+<<<<<<< HEAD
 .input-base { 
+=======
+.input-base {
+>>>>>>> d730b9799d14fe57a99cee1a5eb8d260ef393fe3
   font-size: 20px;
   width: 100%;
   height: 50px;
   padding: 0px 10px;
+<<<<<<< HEAD
   box-sizing:border-box;
+=======
+  box-sizing: border-box;
+>>>>>>> d730b9799d14fe57a99cee1a5eb8d260ef393fe3
   position: relative;
   display: block;
   border: none;
@@ -525,7 +821,11 @@ header img {
   background: #f0f0f0;
   color: black;
   opacity: 0;
+<<<<<<< HEAD
 	-webkit-transition: opacity 0.3s;
+=======
+  -webkit-transition: opacity 0.3s;
+>>>>>>> d730b9799d14fe57a99cee1a5eb8d260ef393fe3
   transition: opacity 0.3s;
   border: 2px solid #6a7989;
   border-top: none;
@@ -548,13 +848,18 @@ header img {
   line-height: 50px;
   width: 100%;
   -webkit-transition: -webkit-transform 0.3s 0.3s;
+<<<<<<< HEAD
 	transition: transform 0.3s 0.3s;
+=======
+  transition: transform 0.3s 0.3s;
+>>>>>>> d730b9799d14fe57a99cee1a5eb8d260ef393fe3
 }
 
 .input-label::before,
 .input-label::after {
   content: '';
   position: absolute;
+<<<<<<< HEAD
 	top: 0;
 	left: 0;
 	width: 100%;
@@ -578,11 +883,37 @@ header img {
 	transform: scale3d(1, 0, 1);
 	-webkit-transform-origin: 50% 0%;
 	transform-origin: 50% 0%;
+=======
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-transition: -webkit-transform 0.3s;
+  transition: transform 0.3s;
+}
+
+.input-label::before {
+  border-top: 2px solid #6a7989;
+  -webkit-transform: translate3d(0, 100%, 0) translate3d(0, -2px, 0);
+  transform: translate3d(0, 100%, 0) translate3d(0, -2px, 0);
+  -webkit-transition-delay: 0.3s;
+  transition-delay: 0.3s;
+}
+
+.input-label::after {
+  z-index: -1;
+  background: #ccc;
+  -webkit-transform: scale3d(1, 0, 1);
+  transform: scale3d(1, 0, 1);
+  -webkit-transform-origin: 50% 0%;
+  transform-origin: 50% 0%;
+>>>>>>> d730b9799d14fe57a99cee1a5eb8d260ef393fe3
 }
 
 /*表单动画*/
 .input-base:focus {
   outline: none;
+<<<<<<< HEAD
 	-webkit-transition-delay: 0.3s;
   transition-delay: 0.3s;
   opacity: 1 !important; 
@@ -612,6 +943,37 @@ header img {
 	transition-delay: 0.3s;
 	-webkit-transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
 	transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+=======
+  -webkit-transition-delay: 0.3s;
+  transition-delay: 0.3s;
+  opacity: 1 !important;
+}
+
+.input-base:focus+.input-label .input-label-content {
+  -webkit-transform: translate3d(0, -80%, 0);
+  transform: translate3d(0, -80%, 0);
+  -webkit-transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+  transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+.input-base:focus+.input-label::before {
+  -webkit-transition-delay: 0s;
+  transition-delay: 0s;
+}
+
+.input-base:focus+.input-label::before {
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+
+.input-base:focus+.input-label::after {
+  -webkit-transform: scale3d(1, 1, 1);
+  transform: scale3d(1, 1, 1);
+  -webkit-transition-delay: 0.3s;
+  transition-delay: 0.3s;
+  -webkit-transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+  transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+>>>>>>> d730b9799d14fe57a99cee1a5eb8d260ef393fe3
 }
 
 /*发布面试情况*/
@@ -630,10 +992,25 @@ header img {
   overflow: auto;
 }
 
+<<<<<<< HEAD
 .interview-right .interview-page ul li {
   border-top: 1px #F8F8F8 solid;
   height: 40px;
   line-height: 40px;
+=======
+.interview-right .interview-page ul .page-time-item {
+  position: relative;
+  width: 100%;
+  border-top: 1px #F8F8F8 solid;
+  height: 40px;
+  line-height: 40px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.interview-right .interview-page ul li:first-child {
+  border-top: none;
+>>>>>>> d730b9799d14fe57a99cee1a5eb8d260ef393fe3
 }
 
 .interview-right .interview-page ul li:hover {
@@ -641,6 +1018,44 @@ header img {
   cursor: pointer;
 }
 
+<<<<<<< HEAD
+=======
+.time-first {
+  padding: 0 5px;
+  background-color: #6a7989;
+  border-right: 1px solid #F8F8F8;
+  color: white;
+}
+
+.time-last {
+  padding: 0 5px;
+  width: 35px;
+  border-left: 1px solid #aaa;
+}
+
+.time-delete {
+  display: none;
+  transition: all 0.3s;
+  text-align: center;
+  background-color: rgba(255, 0, 0, 0.5);
+  color: white;
+  border: none;
+  cursor: pointer;
+  height: 40px;
+  line-height: 40px;
+}
+
+.time-delete p {
+  font-size: large;
+  width: 100%;
+  text-align: center;
+}
+
+.time-delete:hover {
+  background-color: red !important;
+}
+
+>>>>>>> d730b9799d14fe57a99cee1a5eb8d260ef393fe3
 /*滑动条样式*/
 .interview-page ul::-webkit-scrollbar {
   width: 4px;
@@ -653,4 +1068,22 @@ header img {
   background: rgba(0, 0, 0, 0.2);
 }
 
+<<<<<<< HEAD
+=======
+/*定义淡出动画*/
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+>>>>>>> d730b9799d14fe57a99cee1a5eb8d260ef393fe3
 /*黄创境部分结束*/

@@ -94,6 +94,9 @@ $('.login-btn').click(function() {
           $('.login-avatar').css('color','skyblue');
           $('[name=username]').val("");
           $('[name=password]').val("");
+          $.cookie('token',data.data.token , {
+            expires : data.data.expireTime,
+          });
         }else {
           $('#login-tip').text('用户不存在');
           setTimeout(function() {

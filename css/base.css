@@ -73,7 +73,14 @@ a {
   url('//at.alicdn.com/t/font_2016705_veu6behpiv.ttf') format('truetype'),
   url('//at.alicdn.com/t/font_2016705_veu6behpiv.svg#iconfont') format('svg');
 }
-
+/*图标代码
+右箭头：&#xe743;
+左箭头：&#xe744;
+关闭：&#xe747;
+线性彩虹：&#xe63c;
+刷新：&#xe608;
+user：&#xe716;
+*/
 .icon {
   font-family: 'iconfont';
   font-size: 38px;
