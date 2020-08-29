@@ -1,7 +1,7 @@
 /* 学生信息宽度拖动 */
 /* @author: 陈泳充 */
 if (localStorage.getItem("studentsWidth") === null) {
-  localStorage.setItem("studentsWidth", JSON.stringify(["5%", "5%", "10%", "10%", "12%", "12%", "10%", null]));
+  localStorage.setItem("studentsWidth", JSON.stringify(["8%", "8%", "10%", "10%", "12%", "12%", "10%", "10%", null]));
 }
 let widthArr = JSON.parse(localStorage.getItem("studentsWidth"));
 for (let i = 0; i < 8; i++) {
@@ -18,7 +18,6 @@ $('.students thead tr').on('mousedown', '.move-loc', function (e) {
     $(this).css("cursor", "col-resize");
     let result = studentsStartWidth + e.clientX - studentsStartX;
     result = result < 30 ? 30 : result;
-    result = result > 400 ? 400 : result;
     that.parent().width(result);
   }
   $("html").on("mousemove", studentsDrag);
@@ -97,6 +96,7 @@ $('.main-enroll .students tbody').on("click", "tr", function () {
   studentsDetails用于记录学生的个人介绍、技能、工作室了解等信息
   sStatus用于记录状态
 */
+
 let page = null;
 let group = null;
 let pageNum = null;
@@ -142,6 +142,7 @@ const setStudentsMes = (current, size, sName = "", sNumber = "", group = null, s
       let arr = data.data.records
       let len = arr.length;
       let studentCon = ''
+      let sArr = ["未笔试", "笔试通过", "已面试", "面试通过", "考核通过", "考核失败"];
       for (let i = 0; i < len; i++) {
         studentCon +=
           `<tr>
@@ -151,10 +152,12 @@ const setStudentsMes = (current, size, sName = "", sNumber = "", group = null, s
               <th>${arr[i]["studentNumber"]}</th>
               <th>${arr[i]["groupName"]}</th>
               <th>${arr[i]["phone"]}</th>
-              <th>${arr[i]["status"] === 0 ? '未通过' : '已通过'}</th>
+              <th>${sArr[arr[i]["status"]]}</th>
               <th><a href="javascript:void(0)">点击查看</a></th>
+              <th></th>
             </tr>`;
         studentsDetails.push({
+          id: arr[i]["userId"],
           name: arr[i]["name"],
           introduction: arr[i]["introduction"],
           skill: arr[i]["skill"],
@@ -177,16 +180,34 @@ setTimeout(function () {
 $('.main-enroll .students tbody').on("click", "tr a", function (e) {
   e.stopPropagation()
   let details = studentsDetails[$(this).parent().parent().index()];
-  $(".students-details .content .name span").html(details["name"]);
-  $(".students-details .content .introduction p").html(details["introduction"]);
-  $(".students-details .content .skill p").html(details["skill"]);
-  $(".students-details .content .impression p").html(details["impression"]);
-
+  $(".students-details").html("");
+  $(".students-details").html(
+    `<div class="content">
+      <div>
+        <span>${details["name"]}</span>
+      </div>
+      <div>
+        <span>个人介绍</span>
+        <p>${details["introduction"]}</p>
+      </div>
+      <div>
+        <span>掌握技能</span>
+        <p>${details["skill"]}</p>
+      </div>
+      <div>
+        <span>对工作室的了解</span>
+        <p>${details["impression"]}</p>
+      </div>
+    </div>`);
   $(".students-details").fadeIn(200);
+
+
 
   function temp(e) {
     if (e.target.getAttribute("class") === "students-details") {
-      $(".students-details").fadeOut(200);
+      $(".students-details").fadeOut(200, function () {
+        $(".students-details").scrollTop(0);
+      });
       $(".students-details").off("click", temp);
     }
   }
@@ -215,8 +236,12 @@ $(".main-enroll .head #status").on("click", function () {
   let value = $(this).find("option:selected").val();
   let statusArr = {
     "全部": null,
-    "未通过": 0,
-    "已通过": 1,
+    "未笔试": 0,
+    "笔试通过": 1,
+    "已面试": 2,
+    "面试通过": 3,
+    "考核通过": 4,
+    "考核失败": 5
   }
   if (statusArr[value] === sStatus) {
     return;
@@ -281,5 +306,80 @@ $('.main-enroll .pages .page').on("click", "li", function () {
       page = $(this).index();
     }
     isNaN(sInputValue) ? setStudentsMes(page, 12, sInputValue, "", group, sStatus) : setStudentsMes(page, 12, "", sInputValue, group, sStatus);
+  }
+})
+
+/* 修改状态 */
+/* @author: 陈泳充 */
+$(".main-enroll .head .change").on("click", function () {
+  $('.change-status').fadeIn(100);
+  let len = checkArr.length;
+  if (!len) {
+    $(".change-status").html(`
+    <div class="error-mes">
+      请至少选择一个学生
+    </div> `);
+    setTimeout(function () {
+      $('.change-status').fadeOut(100);
+    }, 1000)
+  } else {
+    $(".change-status").html(`
+    <div class="content">
+      <ul>
+        <li>未笔试</li>
+        <li>笔试通过</li>
+        <li>已面试</li>
+        <li>面试通过</li>
+        <li>考核通过</li>
+        <li>考核失败</li>
+      </ul>
+      <div class="cancel">取消</div>
+    </div>`)
+
+    $(".change-status .content .cancel").one("click", function () {
+      $('.change-status').fadeOut(100);
+    });
+
+    $(".change-status .content ul").one("click", "li", function () {
+      let value = $(this).html();
+      let status = $(this).index();
+      let names = studentsDetails[checkArr[0]]["name"];
+      $(".change-status").html(`
+      <div class="is-change">
+        <span></span>
+        <div>
+          <div class="is-change-yes">确认</div>
+          <div class="is-change-no">取消</div>
+        </div>
+      </div>`)
+      for (let i = 1; i < len; i++) {
+        names += `，${studentsDetails[checkArr[i]]["name"]}`
+      }
+      $(".change-status .is-change span").html(`确认把 "${names}" 的状态修改为 "${value}" 吗？`);
+      $(".change-status .is-change .is-change-no").one("click", function () {
+        $('.change-status').fadeOut(100);
+      });
+      $(".change-status .is-change .is-change-yes").one("click", function () {
+        for (let i = 0; i < len; i++) {
+          $.ajax({
+            url: "/api/admin/updateStudentStatus",
+            type: "POST",
+            dateType: 'json',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': $.cookie('token')
+            },
+            data: JSON.stringify({
+              "userId": studentsDetails[checkArr[i]]["id"],
+              "status": status
+            }),
+            success: function (data) {
+              console.log(data)
+              $('.change-status').fadeOut(100);
+            }
+          });
+        }
+      })
+    })
   }
 })

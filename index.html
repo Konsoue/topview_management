@@ -43,7 +43,9 @@
     </ul>
   </div>
 
-  <!-- 学生细节展示 -->
+  <!-- 学生细节展示
+  @author: 陈泳充
+  -->
   <div class="students-details">
     <div class="content">
       <div class="name">
@@ -63,6 +65,14 @@
       </div>
     </div>
   </div>
+
+  <!-- 修改状态
+  @author: 陈泳充
+  -->
+  <div class="change-status">
+  </div>
+
+
   <!-- 右边部分 -->
   <div class="main">
     <!-- 陈泳充部分 报名情况详情页 开始 -->
@@ -81,11 +91,15 @@
         状态:
         <select id="status">
           <option value="全部">全部</option>
-          <option value="未通过">未通过</option>
-          <option value="已通过">已通过</option>
+          <option value="未笔试">未笔试</option>
+          <option value="笔试通过">笔试通过</option>
+          <option value="已面试">已面试</option>
+          <option value="面试通过">面试通过</option>
+          <option value="考核通过">考核通过</option>
+          <option value="考核失败">考核失败</option>
         </select>
         <input type="text" placeholder="输入姓名或学号，Enter搜索">
-        <span class="confirm-change">确定修改</span>
+        <span class="change">修改状态</span>
       </div>
       <!-- 学生信息 -->
       <div class="students">
@@ -101,6 +115,7 @@
               <th>手机号<span class="move-loc"></span></th>
               <th>状态<span class="move-loc"></span></th>
               <th>其他信息</th>
+              <th></th>
             </tr>
           </thead>
           <!-- 分栏 -->

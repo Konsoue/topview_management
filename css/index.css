@@ -197,7 +197,7 @@ header img {
 }
 
 .main-enroll .head input,
-.main-enroll .head .confirm-change {
+.main-enroll .head .change {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -211,7 +211,7 @@ header img {
   border: 1px solid #aaa;
 }
 
-.main-enroll .head .confirm-change {
+.main-enroll .head .change {
   right: 20px;
   width: 75px;
   height: 25px;
@@ -256,8 +256,11 @@ header img {
 .main-enroll .students thead th:first-child {
   border-left: none;
 }
-
+.main-enroll .students thead th:nth-child(8) {
+  border-right: none;
+}
 .main-enroll .students thead th:last-child {
+  border-left: none;
   border-right: none;
 }
 
@@ -337,7 +340,7 @@ header img {
   position: fixed;
   width: 100vw;
   height: 100vh;
-  z-index: 10000000;
+  z-index: 100;
   background-color: rgba(10, 10, 10, .2);
 }
 
@@ -373,12 +376,109 @@ header img {
 }
 
 .students-details .content p {
-  padding: 20px 0;
-  width: 100%;
+  padding: 20px 10px;
+  width: 90%;
   border: 1px solid #ccc;
   text-decoration: underline;
   text-indent: 2em;
   user-select: text;
+}
+
+.change-status {
+  display: none;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
+  background-color: rgba(10, 10, 10, .2);
+}
+
+.change-status .content,
+.change-status .error-mes,
+.change-status .is-change {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.change-status .content {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  background-color: #fff;
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, .35);
+}
+
+.change-status .content ul {
+  width: 100%;
+}
+
+.change-status .content ul li,
+.change-status .cancel {
+  margin: 10px auto;
+  width: 80%;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  cursor: pointer;
+  color: #1B9AF7;
+  border-radius: 10px;
+  border: 1px solid #1B9AF7;
+  transition: all .3s;
+}
+
+.change-status .content ul li:hover {
+  background-color: #1B9AF7;
+  color: #fff;
+}
+
+.change-status .cancel {
+  margin: 0 auto 10px;
+  background-color: #D51D00;
+  color: #fff;
+  border: none;
+}
+
+.change-status .error-mes {
+  width: 200px;
+  height: 100px;
+  line-height: 100px;
+  text-align: center;
+  background-color: #fff;
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, .35);
+}
+
+.change-status .is-change {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  width: 300px;
+  background-color: #fff;
+}
+.change-status .is-change span {
+  display: block;
+  width: 80%;
+}
+.change-status .is-change>div {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  width: 80%;
+}
+.change-status .is-change-yes,
+.change-status .is-change-no {
+  width: 45%;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  color: #fff;
+  border-radius: 10px;
+  background-color: skyblue;
+  cursor: pointer;
+}
+.change-status .is-change-no {
+  background-color: red;
 }
 
 /* 陈泳充部分结束 */
@@ -430,9 +530,9 @@ header img {
   /*display: flex;*/
   justify-content: space-around;
   /*CSS3淡入淡出动画*/
-  animation-name: fadein; 
-  animation-duration: 0.3s; 
-  animation-iteration-count: 1; 
+  animation-name: fadein;
+  animation-duration: 0.3s;
+  animation-iteration-count: 1;
   animation-delay: 0s;
 }
 
@@ -720,7 +820,7 @@ header img {
 }
 
 .interview-right .interview-page ul li:first-child {
-  border-top:none;
+  border-top: none;
 }
 
 .interview-right .interview-page ul li:hover {
@@ -732,7 +832,7 @@ header img {
   padding: 0 5px;
   background-color: #6a7989;
   border-right: 1px solid #F8F8F8;
-  color:white ;
+  color: white;
 }
 
 .time-last {
@@ -777,14 +877,16 @@ header img {
 
 /*定义淡出动画*/
 @keyframes fadein {
-  0%{
-    opacity: 0;     
+  0% {
+    opacity: 0;
   }
+
   50% {
-    opacity: 0; 
+    opacity: 0;
   }
+
   100% {
-    opacity: 1; 
+    opacity: 1;
   }
 }
 
