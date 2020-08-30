@@ -128,8 +128,8 @@ header img {
   text-overflow: ellipsis;
   white-space: nowrap; */
   /* 控制溢出文字换行 */
-  table-layout:fixed; 
-  word-break:break-all; 
+  table-layout:fixed;
+  word-break:break-all;
   overflow:hidden;
 }
 
@@ -288,7 +288,6 @@ header img {
 
 .main-enroll .students thead th {
   min-width: 30px;
-  max-width: 200px;
   position: relative;
   border: 1px solid #ccc;
 }
