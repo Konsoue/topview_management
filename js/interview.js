@@ -1,3 +1,9 @@
+/*
+ *@author:   黄创境
+ *@function: 获取历史分页并跳转
+ *@params:   groupId为历史组别id
+*/
+
 let groupId = getOnce();    
 
 $('[groups]').on('click',function() {   //点击分页切换面试队伍查看
@@ -7,12 +13,23 @@ $('[groups]').on('click',function() {   //点击分页切换面试队伍查看
   getQueue(groupId);
   $('.show-groups').text(groupSwitch(groupId));
   $('.groupname').text(groupSwitch(groupId));
-
   getInterviewTime()
 })
 
-/* 转换 */
-/* @author: 黄创境 */
+function getOnce() {    //读取历史
+  let lastnum = localStorage.getItem("lastnum");
+
+  if (lastnum !== null) {
+      return lastnum;
+  } else {
+      return 1;
+  }
+}
+
+/*
+ *@author:   黄创境
+ *@function: 转换组别和性别
+*/
 function sexSwitch(num) {
   if(num == 1) {
     return '男';
@@ -28,8 +45,11 @@ function groupSwitch(num) {
   return grouparr[num-1];
 }
 
-/* 检测 */
-/* @author: 黄创境 */
+/*
+ *@author:   黄创境
+ *@function: input输入框的检测
+ *@params:   groupId为历史组别id
+*/
 $('#input-1').on('blur',function() {    //检测最大人数
   if($(this).val() <= 0) {
     $(this).next().find("span").text('数字小了喂');
@@ -48,19 +68,17 @@ function getNowFormatDate() {     //获取当前日期
   let month = date.getMonth() + 1;
   let strDate = date.getDate();
   if (month >= 1 && month <= 9) {
-      month = "0" + month;
+    month = "0" + month;
   }
   if (strDate >= 0 && strDate <= 9) {
-      strDate = "0" + strDate;
+    strDate = "0" + strDate;
   }
- 
   return year + seperator1 + month + seperator1 + strDate;
 }
 
 $('#input-2').on('blur',function() {   //检测日期
   let goday = $(this).val();
   let today = getNowFormatDate();
-
   if(new Date(goday.replace(/\-/g, "\/")) < new Date(today.replace(/\-/g, "\/"))) {
     $(this).next().find("span").text('过期了喂');
     $(this).next().css('color','red');
@@ -82,19 +100,10 @@ $('.input-base').on('focus',function() {    //聚焦恢复
   $(this).next().find("span").text(sayarr[$(this).attr('inputid')]);
 })
 
-/* 查看面试队伍 */
-/* @author: 黄创境 */
-//读取历史
-function getOnce() {
-  let lastnum = localStorage.getItem("lastnum");
-
-  if (lastnum !== null) {
-      return lastnum;
-  } else {
-      return 1;
-  }
-}
-
+/*
+ *@author:   黄创境
+ *@function: 获取面试队伍请求并添加
+*/
 function getQueue(id) {   //获取面试队伍请求
   $.ajax({    
     url : "/api/admin/getQueueStatus?groupId=" + id,   
@@ -103,17 +112,21 @@ function getQueue(id) {   //获取面试队伍请求
       'Authorization': $.cookie('token')
     },
     success : function(res) { 
-      if(res.data.isQueueTime) {
-        $('.interview-left .nonetime').css('display','none');
-        addQueue(res.data);
+      if(res.code == 200) {
+        if(res.data.isQueueTime) {
+          $('.interview-left .nonetime').css('display','none');
+          addQueue(res.data);
+        } else {
+          $('.interview-left .nonetime').css('display','block');
+        }
       } else {
-        $('.interview-left .nonetime').css('display','block');
+        alert(res.message);
       }
-      
     },
-    error : function(res) {  console.error(res)  }
+    error : function(res) {  
+      console.error(res)  
+    }
   });   
-
 }
 
 function cleanQueue() {   //清空面试队列
@@ -136,19 +149,22 @@ function addQueue(data) {   //添加面试队列
     `;
   })
   $('.witer table tbody').html(addQueueStr);
-
   $('[studentid]').click(function() {   //点击完成面试
-    finishInterview();
+    if(confirm($(this).siblings(":nth-child(2)").text() + "同学是否为已面试？")) {
+      let that = this;
+      finishInterview(that);
+    } 
   });
 }
 
-//刷新按钮
-$('.interview-top .icon-box').click(function () {
+$('.interview-top .icon-box').click(function () {   //刷新按钮
   $(`[groups=${groupId}]`).trigger("click"); 
 })
 
-/* 面试发布与动画 */
-/* @author: 黄创境 */
+/*
+ *@author:   黄创境
+ *@function: 面试发布与其动画效果
+*/
 $('.output-interview').mouseover(function () {    //鼠标移入动画
   $('.input-base').stop().animate({
     bottom:-50,
@@ -165,7 +181,7 @@ $('.output-interview').mouseout(function () {   //鼠标移出动画
 });
 
 $('.output-interview').click(function() {   //点击确认发布面试
-  let inputValueArr = [];-
+  let inputValueArr = [];
   $('.input-base').each(function() {    //遍历检测
     if($(this).val() == "") {
       $(this).next().find("span").text('还没填呢');
@@ -174,7 +190,6 @@ $('.output-interview').click(function() {   //点击确认发布面试
       inputValueArr.push($(this).val());
     }
   })
-
   if(inputValueArr.length == 4) {
     postQueue(inputValueArr,groupId);   //检验成功则发出发布面试请求
     $('.input-base').each(function() {  //清空input
@@ -200,36 +215,45 @@ function postQueue(arr,id) {    //面试发布请求
     success : function(res) { 
       if(res.code == 200) {
         $(`[groups=${groupId}]`).trigger("click"); 
+      } else {
+        alert(res.message);
       }
     },
     error : function(data) {  console.error(data)  }    
   });   
 }
 
-/*已完成 */
-/* @author: 黄创境 */
-function finishInterview() {
+/*
+ *@author:   黄创境
+ *@function: 学生已完成请求
+*/
+function finishInterview( that ) {
   $.ajax({    
-    url : "/api/admin/markStudentAsInterviewed?studentId=" + $(this).attr('studentid'),   
+    url : "/api/admin/markStudentAsInterviewed?studentId=" + $(that).attr('studentid'),   
     type : "GET", 
     headers : {
       'Authorization': $.cookie('token')
     },
     success : function(res) { 
-      console.log(res);
-      cleanQueue();
-      getQueue(groupId);
+      if(res.code == 200) {
+        cleanQueue();
+        getQueue(groupId);
+      } else {
+        alert(res.message);
+      }
     },
-    error : function(res) {  console.error(res)  }
+    error : function(res) {  
+      console.error(res)  
+    }
   }); 
 }
 
-/*查看面试时间 */
-/* @author: 黄创境 */
+/*
+ *@author:   黄创境
+ *@function: 面试时间请求并添加
+*/
 function getInterviewTime() {   //查看面试时间请求
-
   $('.page-time').html('');
-
   $.ajax({    
     url : "/api/admin/getAllNotEndInterviewTimesByAdmin?groupId=" + groupId,   
     type : "GET", 
@@ -237,20 +261,25 @@ function getInterviewTime() {   //查看面试时间请求
       'Authorization': $.cookie('token')
     },
     success : function(res) {
-      if(res.data == "") {
-        $('.page-time').html('');
-        $('.page-time').append(`<li class="page-time-item" style="display:block;">还没发布呢</li>`);
+      if(res.code == 200) {
+        if(res.data == "") {
+          $('.page-time').html('');
+          $('.page-time').append(`<li class="page-time-item" style="display:block;">还没发布呢</li>`);
+        } else {
+          addTimeRanks(res.data);
+        }
       } else {
-        addTimeRanks(res.data);
+        console.log(res.message);
       }
     },
-    error : function(res) {  console.error(res)  }
+    error : function(res) {  
+      console.error(res)  
+    }
   }); 
 }
 
 function addTimeRanks(data) {   //添加已面试时间 
   $('.page-time').html('');
-
   let addTimeRanksStr = "";
   $.each(data, function(i, n) {
     addTimeRanksStr += `
@@ -264,11 +293,8 @@ function addTimeRanks(data) {   //添加已面试时间
       </li>
     `;
   })
-
   $('.page-time').html(addTimeRanksStr);
-
   $('.page-time-item').on("click", function(){    //点击显示删除按钮
-
     if( $(this).next().css('display') == 'block' ) {
       $(this).next().css('display','none');
     } else {
@@ -277,18 +303,15 @@ function addTimeRanks(data) {   //添加已面试时间
       })
       $(this).next().css('display','block');
     }
-    
   })
-
   $('.time-delete').on("click", function(){   //监听删除事件
-    deleteInterviewTime($(this).attr('timeid'));
+    if(confirm($(this).prev().children(":nth-child(1)").text() + '号' + $(this).prev().children(":nth-child(2)").text() + "的面试取消吗？")) {
+      deleteInterviewTime($(this).attr('timeid'));
+    }
   })
-
 }
 
-/*删除面试时间 */
-/* @author: 黄创境 */
-function deleteInterviewTime(id) {
+function deleteInterviewTime(id) {    //删除面试时间
   $.ajax({    
     url : "/api/admin/deleteInterviewTime?interviewTimeId=" + id,   
     type : "GET", 
@@ -296,10 +319,15 @@ function deleteInterviewTime(id) {
       'Authorization': $.cookie('token')
     },
     success : function(res) {
-      console.log(res);
-      $(`[groups=${groupId}]`).trigger("click"); 
+      if(res.code == 200) {
+        getInterviewTime();
+      } else {
+        alert(res.message);
+      }
     },
-    error : function(res) {  console.error(res)  }
+    error : function(res) {  
+      console.error(res)  
+    }
   }); 
 }
  
