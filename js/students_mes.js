@@ -1,10 +1,10 @@
 /* 学生信息宽度拖动 */
 /* @author: 陈泳充 */
 if (localStorage.getItem("studentsWidth") === null) {
-  localStorage.setItem("studentsWidth", JSON.stringify(["8%", "8%", "10%", "10%", "12%", "12%", "10%", "10%", null]));
+  localStorage.setItem("studentsWidth", JSON.stringify(["8%", "8%", "10%", "10%", "12%", "12%", "10%", "100px", null]));
 }
 let widthArr = JSON.parse(localStorage.getItem("studentsWidth"));
-for (let i = 0; i < 8; i++) {
+for (let i = 0; i < 9; i++) {
   $('.students thead th').eq(i).width(widthArr[i]);
 }
 
@@ -30,7 +30,7 @@ $('.students thead tr').on('mousedown', '.move-loc', function (e) {
   });
 })
 
-/* 学生信息全选 */
+/* 学生信息多选 */
 /* @author: 陈泳充 */
 /* @params:
   ctrlSure, shiftSure 用于判断是否按下ctrl 或 shfit键
@@ -83,8 +83,8 @@ $('.main-enroll .students tbody').on("click", "tr", function () {
       checkArr = checkArr.indexOf($(this).index()) === -1 ? [$(this).index()] : [];
     }
   }
+  console.log(checkArr)
 })
-
 
 /* 加载学生信息 */
 /* @author: 陈泳充 */
@@ -122,6 +122,7 @@ const setStudentsMes = (current, size, sName = "", sNumber = "", group = null, s
     }),
     success: function (data) {
       // 更新 page 和 studentsDetails
+      checkArr = [];
       page = data.data.current;
       studentsDetails = [];
       // 加载数据条数
@@ -201,13 +202,9 @@ $('.main-enroll .students tbody').on("click", "tr a", function (e) {
     </div>`);
   $(".students-details").fadeIn(200);
 
-
-
   function temp(e) {
     if (e.target.getAttribute("class") === "students-details") {
-      $(".students-details").fadeOut(200, function () {
-        $(".students-details").scrollTop(0);
-      });
+      $(".students-details").fadeOut(200);
       $(".students-details").off("click", temp);
     }
   }
@@ -328,7 +325,6 @@ $(".main-enroll .head .change").on("click", function () {
       <ul>
         <li>未笔试</li>
         <li>笔试通过</li>
-        <li>已面试</li>
         <li>面试通过</li>
         <li>考核通过</li>
         <li>考核失败</li>
@@ -341,9 +337,16 @@ $(".main-enroll .head .change").on("click", function () {
     });
 
     $(".change-status .content ul").one("click", "li", function () {
+      let statusArr = {
+        "未笔试": 0,
+        "笔试通过": 1,
+        "面试通过": 3,
+        "考核通过": 4,
+        "考核失败": 5
+      }
       let value = $(this).html();
-      let status = $(this).index();
-      let names = studentsDetails[checkArr[0]]["name"];
+      let status = statusArr[value];
+      let names = `<ul style="margin:10px 0">`;
       $(".change-status").html(`
       <div class="is-change">
         <span></span>
@@ -352,33 +355,43 @@ $(".main-enroll .head .change").on("click", function () {
           <div class="is-change-no">取消</div>
         </div>
       </div>`)
-      for (let i = 1; i < len; i++) {
-        names += `，${studentsDetails[checkArr[i]]["name"]}`
+      for (let i = 0; i < len; i++) {
+        names += `<li> - ${studentsDetails[checkArr[i]]["name"]}<li>`
       }
-      $(".change-status .is-change span").html(`确认把 "${names}" 的状态修改为 "${value}" 吗？`);
+      names += `</ul>`
+      $(".change-status .is-change span").html(`确认把${names}的状态修改为"${value}" 吗？`);
       $(".change-status .is-change .is-change-no").one("click", function () {
         $('.change-status').fadeOut(100);
       });
       $(".change-status .is-change .is-change-yes").one("click", function () {
+        let updateStatusBos = [];
         for (let i = 0; i < len; i++) {
-          $.ajax({
-            url: "/api/admin/updateStudentStatus",
-            type: "POST",
-            dateType: 'json',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': $.cookie('token')
-            },
-            data: JSON.stringify({
-              "userId": studentsDetails[checkArr[i]]["id"],
-              "status": status
-            }),
-            success: function (data) {
-              console.log(data)
-              $('.change-status').fadeOut(100);
-            }
-          });
+          updateStatusBos.push({
+            "userId": studentsDetails[checkArr[i]]["id"],
+            "status": status
+          })
         }
+
+        $.ajax({
+          url: "/api/admin/updateStudentStatus",
+          type: "POST",
+          dateType: 'json',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': $.cookie('token')
+          },
+          data: JSON.stringify({
+            "updateStatusBos": updateStatusBos
+          }),
+          success: async function (data) {
+            console.log(data);
+            await isNaN(sInputValue) ? setStudentsMes(page, 12, sInputValue, "", group, sStatus) : setStudentsMes(page, 12, "", sInputValue, group, sStatus);
+            $('.change-status').fadeOut(100);
+          },
+          error: function () {
+            alert('修改失败')
+          }
+        });
       })
     })
   }
