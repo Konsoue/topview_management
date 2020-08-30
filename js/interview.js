@@ -1,18 +1,3 @@
-/*临时登录*/
-$.ajax({
-  url: "/api/login",
-  type:"POST",
-  contentType: "application/json",
-  data: JSON.stringify({
-    username: 'topview',
-    password: 'topview'
-  }),
-  success:function (data) {
-    //console.log(data.data.token);
-    
-  },
-});
-
 let groupId = getOnce();    
 
 $('[groups]').on('click',function() {   //点击分页切换面试队伍查看
@@ -25,8 +10,6 @@ $('[groups]').on('click',function() {   //点击分页切换面试队伍查看
 
   getInterviewTime()
 })
-
-$(`[groups=${groupId}]`).trigger("click");    //获取上次观看的页面
 
 /* 转换 */
 /* @author: 黄创境 */
@@ -138,9 +121,9 @@ function cleanQueue() {   //清空面试队列
 }
 
 function addQueue(data) {   //添加面试队列
-
+  let addQueueStr = "";
   $.each(data.queue, function(i, n) {
-    $('.witer table tbody').append(`
+    addQueueStr +=  `
       <tr>
         <th>${n.sequenceNumber}</th>
         <th>${n.studentName}</th>
@@ -150,8 +133,9 @@ function addQueue(data) {   //添加面试队列
         <th>${n.phone}</th>
         <th>${n.college}</th>
       </tr>
-    `);
+    `;
   })
+  $('.witer table tbody').html(addQueueStr);
 
   $('[studentid]').click(function() {   //点击完成面试
     finishInterview();
@@ -166,7 +150,7 @@ $('.interview-top .icon-box').click(function () {
 /* 面试发布与动画 */
 /* @author: 黄创境 */
 $('.output-interview').mouseover(function () {    //鼠标移入动画
-  $('.input-base').animate({
+  $('.input-base').stop().animate({
     bottom:-50,
     opacity: 0.5,
   },300);
@@ -174,7 +158,7 @@ $('.output-interview').mouseover(function () {    //鼠标移入动画
 });
 
 $('.output-interview').mouseout(function () {   //鼠标移出动画
-  $('.input-base').animate({
+  $('.input-base').stop().animate({
     bottom:0,
     opacity: 0,
   },300);
@@ -267,8 +251,9 @@ function getInterviewTime() {   //查看面试时间请求
 function addTimeRanks(data) {   //添加已面试时间 
   $('.page-time').html('');
 
+  let addTimeRanksStr = "";
   $.each(data, function(i, n) {
-    $('.page-time').append(`
+    addTimeRanksStr += `
       <li class="page-time-item"> 
         <span class="time-first" title="日期" >${n.startTime.slice(8,10)}</span>
         <span title="时间">${n.startTime.slice(11,16)}-${n.endTime.slice(11,16)}</span>
@@ -277,8 +262,10 @@ function addTimeRanks(data) {   //添加已面试时间
       <li class='time-delete' timeid=${n.id}> 
         <p>删除</p>
       </li>
-    `);
+    `;
   })
+
+  $('.page-time').html(addTimeRanksStr);
 
   $('.page-time-item').on("click", function(){    //点击显示删除按钮
 

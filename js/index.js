@@ -34,5 +34,6 @@ $('.interview-card').click(function () {
   $('.interview-card').addClass('leftcard');
   $('.main-enroll').hide();
   $('.main-interview').show();
+  $(`[groups=${groupId}]`).trigger("click");    //获取上次观看的页面
 })
 
