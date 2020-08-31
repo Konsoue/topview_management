@@ -53,7 +53,7 @@ $('.login-page').mousedown(function (e) {
 });
 
 // 登录
-$('.login-btn').click(function() {
+$('.login-btn').click(async function() {
   let baseUrl = 'https://server1.backend.topviewclub.cn';
   const name = $('[name=username]').val();
   const pwd = $('[name=password]').val()
@@ -71,7 +71,7 @@ $('.login-btn').click(function() {
     },2000)
     return false;
   }
-  $.ajax({
+  await $.ajax({
     url: '/api/login',
     type: 'POST',
     data: JSON.stringify({ 
@@ -111,6 +111,7 @@ $('.login-btn').click(function() {
       }
       // console.log(data);
       // 
+      setStudentsMes(1,12);
     }
   })
 })
