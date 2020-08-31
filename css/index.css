@@ -838,6 +838,10 @@ header img {
   padding: 20px 0;
 }
 
+.interview-right .interview-page p {
+  color: #747575;
+}
+
 .interview-right .interview-page ul {
   margin: 29px;
   background-color: #fff;
@@ -871,6 +875,7 @@ header img {
   background-color: #6a7989;
   border-right: 1px solid #F8F8F8;
   color: white;
+  font-weight: 900;
 }
 
 .time-last {

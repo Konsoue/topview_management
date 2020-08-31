@@ -117,10 +117,13 @@ function getQueue(id) {   //获取面试队伍请求
           $('.interview-left .nonetime').css('display','none');
           addQueue(res.data);
         } else {
+          $('.interview-left .nonetime').html("还没到时间呢");
           $('.interview-left .nonetime').css('display','block');
         }
       } else {
-        alert(res.message);
+        $('.interview-left .nonetime').html(res.message);
+        $('.interview-left .nonetime').css('display','block');
+        console.error("获取" + groupSwitch(id) + "面试队列请求：" + res.message);
       }
     },
     error : function(res) {  
@@ -217,6 +220,7 @@ function postQueue(arr,id) {    //面试发布请求
         $(`[groups=${groupId}]`).trigger("click"); 
       } else {
         alert(res.message);
+        console.error("面试发布请求:" + res.message);
       }
     },
     error : function(data) {  console.error(data)  }    
@@ -240,6 +244,7 @@ function finishInterview( that ) {
         getQueue(groupId);
       } else {
         alert(res.message);
+        console.error("学生已完成面试请求:"+ res.message);
       }
     },
     error : function(res) {  
@@ -269,7 +274,7 @@ function getInterviewTime() {   //查看面试时间请求
           addTimeRanks(res.data);
         }
       } else {
-        console.log(res.message);
+        console.error("查看面试时间请求:" + res.message);
       }
     },
     error : function(res) {  
@@ -323,6 +328,7 @@ function deleteInterviewTime(id) {    //删除面试时间
         getInterviewTime();
       } else {
         alert(res.message);
+        console.error("删除面试时间请求:" + res.message);
       }
     },
     error : function(res) {  
