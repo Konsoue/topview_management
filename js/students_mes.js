@@ -83,7 +83,6 @@ $('.main-enroll .students tbody').on("click", "tr", function () {
       checkArr = checkArr.indexOf($(this).index()) === -1 ? [$(this).index()] : [];
     }
   }
-  console.log(checkArr)
 })
 
 /* 加载学生信息 */
@@ -170,11 +169,6 @@ const setStudentsMes = (current, size, sName = "", sNumber = "", group = null, s
     },
   })
 }
-
-setTimeout(function () {
-  setStudentsMes(1, 12);
-}, 2000)
-
 
 /* 查看学生其他信息 */
 /* @author: 陈泳充 */
@@ -383,8 +377,7 @@ $(".main-enroll .head .change").on("click", function () {
           data: JSON.stringify({
             "updateStatusBos": updateStatusBos
           }),
-          success: async function (data) {
-            console.log(data);
+          success: async function () {
             await isNaN(sInputValue) ? setStudentsMes(page, 12, sInputValue, "", group, sStatus) : setStudentsMes(page, 12, "", sInputValue, group, sStatus);
             $('.change-status').fadeOut(100);
           },
