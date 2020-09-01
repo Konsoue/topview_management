@@ -30,10 +30,12 @@ $('.enroll-card').click(function () {
   $('.main-interview').hide();
 })
 $('.interview-card').click(function () {
+  if(!$('.interview-card').hasClass('leftcard')) {
+    $(`[groups=${groupId}]`).trigger("click");    //获取上次观看的页面
+  }
   $('.enroll-card').removeClass('leftcard');
   $('.interview-card').addClass('leftcard');
   $('.main-enroll').hide();
   $('.main-interview').show();
-  $(`[groups=${groupId}]`).trigger("click");    //获取上次观看的页面
 })
 

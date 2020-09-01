@@ -13,12 +13,11 @@ $('[groups]').on('click',function() {   //点击分页切换面试队伍查看
   getQueue(groupId);
   $('.show-groups').text(groupSwitch(groupId));
   $('.groupname').text(groupSwitch(groupId));
-  getInterviewTime()
+  getInterviewTime();    //查看面试时间请求
 })
 
 function getOnce() {    //读取历史
   let lastnum = localStorage.getItem("lastnum");
-
   if (lastnum !== null) {
       return lastnum;
   } else {
@@ -41,7 +40,7 @@ function sexSwitch(num) {
 }
 
 function groupSwitch(num) {
-  let grouparr = ['前端','后台','安卓','IOS','机器学习']
+  let grouparr = ['前端','后台','安卓','IOS','机器学习'];
   return grouparr[num-1];
 }
 
@@ -95,7 +94,7 @@ $('#input-4').on('blur',function() {    //检测时间
 })
 
 $('.input-base').on('focus',function() {    //聚焦恢复
-  let sayarr = ['最大面试人数','选择日期','开始时间','结束时间'] 
+  let sayarr = ['最大面试人数','选择日期','开始时间','结束时间'] ;
   $(this).next().css('color','#6a7989');
   $(this).next().find("span").text(sayarr[$(this).attr('inputid')]);
 })
@@ -127,7 +126,7 @@ function getQueue(id) {   //获取面试队伍请求
       }
     },
     error : function(res) {  
-      console.error(res)  
+      console.error(res);
     }
   });   
 }
@@ -223,7 +222,9 @@ function postQueue(arr,id) {    //面试发布请求
         console.error("面试发布请求:" + res.message);
       }
     },
-    error : function(data) {  console.error(data)  }    
+    error : function(data) {  
+      console.error(data);  
+    }    
   });   
 }
 
@@ -248,7 +249,7 @@ function finishInterview( that ) {
       }
     },
     error : function(res) {  
-      console.error(res)  
+      console.error(res);  
     }
   }); 
 }
@@ -278,7 +279,7 @@ function getInterviewTime() {   //查看面试时间请求
       }
     },
     error : function(res) {  
-      console.error(res)  
+      console.error(res);  
     }
   }); 
 }
@@ -325,14 +326,14 @@ function deleteInterviewTime(id) {    //删除面试时间
     },
     success : function(res) {
       if(res.code == 200) {
-        getInterviewTime();
+        $(`[groups=${groupId}]`).trigger("click");
       } else {
         alert(res.message);
         console.error("删除面试时间请求:" + res.message);
       }
     },
     error : function(res) {  
-      console.error(res)  
+      console.error(res);  
     }
   }); 
 }

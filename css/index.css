@@ -900,6 +900,7 @@ header img {
   font-size: large;
   width: 100%;
   text-align: center;
+  color: white;
 }
 
 .time-delete:hover {
@@ -909,6 +910,7 @@ header img {
 /*滑动条样式*/
 .interview-page ul::-webkit-scrollbar {
   width: 4px;
+  height: 4px;
 }
 
 .interview-page ul::-webkit-scrollbar-thumb {
