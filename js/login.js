@@ -1,7 +1,7 @@
 /*
  *@author:   huimei
  *@function: 登录
- *@params:   
+ *@params:
  */
 $('.login-page').hide();
 let loginSuccess = false;
@@ -53,8 +53,7 @@ $('.login-page').mousedown(function (e) {
 });
 
 // 登录
-$('.login-btn').click(async function() {
-  let baseUrl = 'https://server1.backend.topviewclub.cn';
+$('.login-btn').click(function() {
   const name = $('[name=username]').val();
   const pwd = $('[name=password]').val()
   if (name == '') {
@@ -71,11 +70,11 @@ $('.login-btn').click(async function() {
     },2000)
     return false;
   }
-  await $.ajax({
+  $.ajax({
     url: '/api/login',
     type: 'POST',
-    data: JSON.stringify({ 
-      username: name, 
+    data: JSON.stringify({
+      username: name,
       password: pwd
     }),
     dataType: 'json',
@@ -83,7 +82,6 @@ $('.login-btn').click(async function() {
       'Content-Type': 'application/json',
     },
     success: function(data) {
-      
       if(data.success) {
         if(data.data.roleId == 2) {
           console.log(data);
@@ -97,6 +95,8 @@ $('.login-btn').click(async function() {
           $.cookie('token',data.data.token , {
             expires : data.data.expireTime,
           });
+
+          setStudentsMes(1,12);
         }else {
           $('#login-tip').text('用户不存在');
           setTimeout(function() {
@@ -109,9 +109,6 @@ $('.login-btn').click(async function() {
           $('#login-tip').text(" ");
         },2000)
       }
-      // console.log(data);
-      // 
-      setStudentsMes(1,12);
     }
   })
 })
