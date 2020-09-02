@@ -96,7 +96,7 @@ $('.login-btn').click(function() {
             expires : data.data.expireTime,
           });
 
-          setStudentsMes(1,12);
+          setStudentsMes(1);
         }else {
           $('#login-tip').text('用户不存在');
           setTimeout(function() {

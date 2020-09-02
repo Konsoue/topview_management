@@ -1,5 +1,7 @@
 /* 学生信息宽度拖动 */
 /* @author: 陈泳充 */
+
+
 if (localStorage.getItem("studentsWidth") === null) {
   localStorage.setItem("studentsWidth", JSON.stringify(["8%", "8%", "10%", "10%", "12%", "12%", "10%", "100px", null]));
 }
@@ -94,6 +96,8 @@ $('.main-enroll .students tbody').on("click", "tr", function () {
   sInputValue是搜索框内容
   studentsDetails用于记录学生的个人介绍、技能、工作室了解等信息
   sStatus用于记录状态
+  size用于记录每页条数
+  ListMax表示下面除左右按键外最多显示的按钮数
 */
 
 let page = null;
@@ -102,7 +106,9 @@ let pageNum = null;
 let sInputValue = "";
 let studentsDetails = [];
 let sStatus = null;
-const setStudentsMes = (current, size, sName = "", sNumber = "", group = null, sStatus = null) => {
+const setStudentsMes = (current, sName = "", sNumber = "", group = null, sStatus = null) => {
+
+  let size = parseInt(Math.floor(($(".main-enroll .pages").offset().top - $(".main-enroll .students thead").offset().top - 50) / 50), 10)
   $.ajax({
     url: "/api/admin/selectStudentInfo",
     type: "POST",
@@ -129,11 +135,50 @@ const setStudentsMes = (current, size, sName = "", sNumber = "", group = null, s
       // 加载分页页面
       if (data.data.total) {
         pageNum = data.data.pages;
-        let pageCon = '<li class="icon">&#xe744</li>';
-        for (let i = 0; i < pageNum; i++) {
-          pageCon += data.data.current === i + 1 ? `<li class='current'>${i + 1}</li>` : `<li>${i + 1}</li>`;
+        let pageCon = page === 1 ? `<li class="icon no-click">&#xe744</li>` : `<li class="icon">&#xe744</li>`
+        let ListMax = 10; // 下面除左右按键外最多显示的按钮数
+        // 页数过多时
+        if (pageNum > ListMax) {
+          // 取半数
+          let half = Math.ceil(ListMax / 2); // 7
+          // 半数页以内时
+          if (page <= half) {
+            for (let i = 1; i <= ListMax - 2; i++) {
+              pageCon += data.data.current === i ?
+                `<li class='current'>${i}</li>` :
+                `<li>${i}</li>`;
+            }
+            pageCon += `<li>...</li><li>${pageNum}</li>`
+          }
+          // 最后半数页时
+          else if (page >= pageNum - half) {
+            pageCon += `<li>1</li><li>...</li>`;
+            for (let i = page - ((ListMax - 2) - (pageNum - page + 1)); i <= pageNum; i++) {
+              pageCon += data.data.current === i ?
+                `<li class='current'>${i}</li>` :
+                `<li>${i}</li>`;
+            }
+          }
+          // 中间
+          else {
+            pageCon += `<li>1</li><li>...</li>`;
+            for (let i = page - 2; i <= page + 3; i++) {
+              pageCon += data.data.current === i ?
+                `<li class='current'>${i}</li>` :
+                `<li>${i}</li>`;
+            }
+            pageCon += `<li>...</li><li>${pageNum}</li>`;
+          }
         }
-        pageCon += '<li class="icon">&#xe743</li>';
+        // 页数小于ListMax时
+        else {
+          for (let i = 1; i <= pageNum; i++) {
+            pageCon += data.data.current === i ?
+              `<li class='current'>${i}</li>` :
+              `<li>${i}</li>`;
+          }
+        }
+        pageCon += page === pageNum ? `<li class="icon no-click">&#xe743</li>` : `<li class="icon">&#xe743</li>`
         $('.main-enroll .pages .page').html(pageCon);
       } else {
         $('.main-enroll .pages .page').html("");
@@ -143,6 +188,7 @@ const setStudentsMes = (current, size, sName = "", sNumber = "", group = null, s
       let len = arr.length;
       let studentCon = ''
       let sArr = ["未笔试", "笔试通过", "已面试", "面试通过", "考核通过", "考核失败"];
+      let sColor = ["#979797", "#42A512", "#F5A623", "#7ED321", "#337EFF", "#F82727", ]
       for (let i = 0; i < len; i++) {
         studentCon +=
           `<tr>
@@ -152,7 +198,7 @@ const setStudentsMes = (current, size, sName = "", sNumber = "", group = null, s
               <th>${arr[i]["studentNumber"]}</th>
               <th>${arr[i]["groupName"]}</th>
               <th>${arr[i]["phone"]}</th>
-              <th>${sArr[arr[i]["status"]]}</th>
+              <th><span style="background-color:${sColor[arr[i]["status"]]}"></span><i>${sArr[arr[i]["status"]]}<i/></th>
               <th><a href="javascript:void(0)">点击查看</a></th>
               <th></th>
             </tr>`;
@@ -221,7 +267,7 @@ $(".main-enroll .head #groups").on("click", function () {
     return;
   }
   group = groupIds[value];
-  isNaN(sInputValue) ? setStudentsMes(1, 12, sInputValue, "", group, sStatus) : setStudentsMes(1, 12, "", sInputValue, group, sStatus);
+  isNaN(sInputValue) ? setStudentsMes(1, sInputValue, "", group, sStatus) : setStudentsMes(1, "", sInputValue, group, sStatus);
 })
 $(".main-enroll .head #status").on("click", function () {
   let value = $(this).find("option:selected").val();
@@ -238,7 +284,7 @@ $(".main-enroll .head #status").on("click", function () {
     return;
   }
   sStatus = statusArr[value];
-  isNaN(sInputValue) ? setStudentsMes(1, 12, sInputValue, "", group, sStatus) : setStudentsMes(1, 12, "", sInputValue, group, sStatus);
+  isNaN(sInputValue) ? setStudentsMes(1, sInputValue, "", group, sStatus) : setStudentsMes(1, "", sInputValue, group, sStatus);
 })
 
 /* 模糊搜索学生 */
@@ -250,7 +296,7 @@ $(".main-enroll .head input").one("focus", function () {
       let value = $(".main-enroll .head input").val().trim();
       if (e.keyCode === 13) {
         flag = 1;
-        isNaN(value) ? setStudentsMes(1, 12, value, "", group, sStatus) : setStudentsMes(1, 12, "", value, group, sStatus);
+        isNaN(value) ? setStudentsMes(1, value, "", group, sStatus) : setStudentsMes(1, "", value, group, sStatus);
         sInputValue = value;
       }
     },
@@ -258,7 +304,7 @@ $(".main-enroll .head input").one("focus", function () {
       let value = $(".main-enroll .head input").val().trim();
       if (e.keyCode === 8) {
         if (!value && flag === 1) {
-          setStudentsMes(1, 12, "", "", group, sStatus);
+          setStudentsMes(1, "", "", group, sStatus);
           flag = 0;
           sInputValue = "";
         }
@@ -269,8 +315,11 @@ $(".main-enroll .head input").one("focus", function () {
 
 /* 分页 */
 /* @author: 陈泳充 */
+
 $('.main-enroll .pages .page').on("mouseenter", "li", function () {
-  if ((page === 1 && $(this).index() === 0) || (page === pageNum && $(this).index() === pageNum + 1)) {
+  if ((page === 1 && $(this).html() === "") ||
+    (page === pageNum && $(this).html() === "") ||
+    $(this).html() === '...') {
     return;
   }
   if ($(this).attr('class') !== "current") {
@@ -281,23 +330,27 @@ $('.main-enroll .pages .page').on("mouseenter", "li", function () {
   })
 })
 
-
 $('.main-enroll .pages .page').on("click", "li", function () {
-  if ((page === 1 && $(this).index() === 0) || (page === pageNum && $(this).index() === pageNum + 1)) {
+
+  if ((page === 1 && $(this).html() === "") ||
+    (page === pageNum && $(this).html() === "") ||
+    $(this).html() == page ||
+    $(this).html() === '...') {
     return;
   }
-  if ($(this).attr('class') === "mouse-enter") {
-    if ($(this).index() === 0) {
-      page -= 1;
-      page = page < 1 ? 1 : page;
-    } else if ($(this).index() === pageNum + 1) {
-      page += 1;
-      page = page > pageNum ? pageNum : page;
-    } else {
-      page = $(this).index();
-    }
-    isNaN(sInputValue) ? setStudentsMes(page, 12, sInputValue, "", group, sStatus) : setStudentsMes(page, 12, "", sInputValue, group, sStatus);
+
+  if ($(this).html() === "") {
+    page -= 1;
+    page = page < 1 ? 1 : page;
+  } else if ($(this).html() === "") {
+    page += 1;
+    page = page > pageNum ? pageNum : page;
+  } else {
+    page = $(this).html();
   }
+
+  isNaN(sInputValue) ? setStudentsMes(page, sInputValue, "", group, sStatus) : setStudentsMes(page, "", sInputValue, group, sStatus);
+
 })
 
 /* 修改状态 */
@@ -378,7 +431,7 @@ $(".main-enroll .head .change").on("click", function () {
             "updateStatusBos": updateStatusBos
           }),
           success: async function () {
-            await isNaN(sInputValue) ? setStudentsMes(page, 12, sInputValue, "", group, sStatus) : setStudentsMes(page, 12, "", sInputValue, group, sStatus);
+            await isNaN(sInputValue) ? setStudentsMes(page, sInputValue, "", group, sStatus) : setStudentsMes(page, "", sInputValue, group, sStatus);
             $('.change-status').fadeOut(100);
           },
           error: function () {
