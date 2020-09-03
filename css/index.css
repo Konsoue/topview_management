@@ -823,31 +823,36 @@ header img {
 }
 
 /*表单动画*/
-.input-base:focus {
+.input-base:focus,
+.input--filled .input-base {
   outline: none;
   -webkit-transition-delay: 0.3s;
   transition-delay: 0.3s;
   opacity: 1 !important;
 }
 
-.input-base:focus+.input-label .input-label-content {
+.input-base:focus + .input-label .input-label-content,
+.input--filled .input-label-content {
   -webkit-transform: translate3d(0, -80%, 0);
   transform: translate3d(0, -80%, 0);
   -webkit-transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
   transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
 }
 
-.input-base:focus+.input-label::before {
+.input-base:focus + .input-label::before,
+.input--filled .input-label::before {
   -webkit-transition-delay: 0s;
   transition-delay: 0s;
 }
 
-.input-base:focus+.input-label::before {
+.input-base:focus + .input-label::before,
+.input--filled .input-label::before {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
 
-.input-base:focus+.input-label::after {
+.input-base:focus+.input-label::after,
+.input--filled .input-label::after {
   -webkit-transform: scale3d(1, 1, 1);
   transform: scale3d(1, 1, 1);
   -webkit-transition-delay: 0.3s;

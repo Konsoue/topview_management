@@ -50,6 +50,11 @@ function groupSwitch(num) {
  *@params:   groupId为历史组别id
 */
 $('#input-1').on('blur',function() {    //检测最大人数
+  if($(this).val() != '') {
+    $(this).parent().addClass('input--filled');
+  } else {
+    $(this).parent().attr("class","input-action");
+  }
   if($(this).val() <= 0) {
     $(this).next().find("span").text('数字小了喂');
     $(this).next().css('color','red');
@@ -82,6 +87,19 @@ $('#input-2').on('blur',function() {   //检测日期
     $(this).next().find("span").text('过期了喂');
     $(this).next().css('color','red');
   }
+  if(goday != '') {
+    $(this).parent().addClass('input--filled');
+  } else {
+    $(this).parent().attr("class","input-action");
+  }
+})
+
+$('#input-3').on('blur',function() {    //检测时间
+  if($(this).val() != '') {
+    $(this).parent().addClass('input--filled');
+  } else {
+    $(this).parent().attr("class","input-action");
+  }
 })
 
 $('#input-4').on('blur',function() {    //检测时间
@@ -90,6 +108,11 @@ $('#input-4').on('blur',function() {    //检测时间
   if(startTime >= endTime) {
     $(this).next().find("span").text('时间没错吗');
     $(this).next().css('color','red');
+  }
+  if($(this).val() != '') {
+    $(this).parent().addClass('input--filled');
+  } else {
+    $(this).parent().attr("class","input-action");
   }
 })
 
@@ -163,25 +186,6 @@ $('.interview-top .icon-box').click(function () {   //刷新按钮
   $(`[groups=${groupId}]`).trigger("click"); 
 })
 
-/*
- *@author:   黄创境
- *@function: 面试发布与其动画效果
-*/
-$('.output-interview').mouseover(function () {    //鼠标移入动画
-  $('.input-base').stop().animate({
-    bottom:-50,
-    opacity: 0.5,
-  },300);
-  $('.input-base').blur();
-});
-
-$('.output-interview').mouseout(function () {   //鼠标移出动画
-  $('.input-base').stop().animate({
-    bottom:0,
-    opacity: 0,
-  },300);
-});
-
 $('.output-interview').click(function() {   //点击确认发布面试
   let inputValueArr = [];
   $('.input-base').each(function() {    //遍历检测
@@ -191,6 +195,7 @@ $('.output-interview').click(function() {   //点击确认发布面试
     } else {
       inputValueArr.push($(this).val());
     }
+    $(this).parent().attr("class","input-action");
   })
   if(inputValueArr.length == 4) {
     postQueue(inputValueArr,groupId);   //检验成功则发出发布面试请求
