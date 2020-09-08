@@ -1,0 +1,92 @@
+﻿body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+form,
+fieldset,
+input,
+textarea,
+p,
+blockquote,
+th,
+td,
+img,
+u,
+i {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: '微软雅黑';
+}
+
+em,
+i {
+  font-style: normal;
+}
+
+ul {
+  list-style: none;
+}
+
+img {
+  border: 0;
+  vertical-align: middle;
+}
+
+a {
+  text-decoration: none;
+  color: #000;
+}
+
+.clearfix:after {
+  visibility: hidden;
+  clear: both;
+  display: block;
+  content: ".";
+  height: 0
+}
+
+.clearfix {
+  *zoom: 1
+}
+
+/*icon的引用*/
+@font-face {
+  font-family: 'iconfont';  /* project id 2016705 */
+  src: url('//at.alicdn.com/t/font_2016705_925dvd4d74b.eot');
+  src: url('//at.alicdn.com/t/font_2016705_925dvd4d74b.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_2016705_925dvd4d74b.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_2016705_925dvd4d74b.woff') format('woff'),
+  url('//at.alicdn.com/t/font_2016705_925dvd4d74b.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_2016705_925dvd4d74b.svg#iconfont') format('svg');
+}
+
+/*图标代码
+右箭头：&#xe743;
+左箭头：&#xe744;
+关闭：&#xe747;
+线性彩虹：&#xe63c;
+刷新：&#xe608;
+user：&#xe716;
+复选框 未选中：&#xe6c8;
+复选框 选中：&#xe6c9;
+复选框 全选：&#xe6ca;
+*/
+.icon {
+  font-family: 'iconfont';
+  font-size: 38px;
+  line-height: 38px;
+}
