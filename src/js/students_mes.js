@@ -3,10 +3,10 @@ import $ from 'jquery'
 /* @author: 陈泳充 */
 
 if (localStorage.getItem('studentsWidth') === null) {
-  localStorage.setItem('studentsWidth', JSON.stringify(['50px', '8%', '8%', '10%', '10%', '12%', '12%', '8%', '100px', null]));
+  localStorage.setItem('studentsWidth', JSON.stringify(['50px', '8%', '8%', '10%', '10%', '10%', '12%', '8%', '5em', null]));
 }
 const widthArr = JSON.parse(localStorage.getItem('studentsWidth'));
-for (let i = 0; i < 9; i++) {
+for (let i = 0; i < 11; i++) {
   $('.students thead th').eq(i).width(widthArr[i]);
 }
 
@@ -108,6 +108,16 @@ $('html').on('keydown', function (e) {
 })
 
 
+// 点击复选框时选择
+$('.main-enroll .students tbody').on('click', 'em', function (e) {
+  e.stopPropagation();
+  let index = $(this).parent().parent().index();
+  let arrIndex = checkArr.indexOf(index);
+  arrIndex !== -1 ? checkArr.splice(arrIndex, 1) : checkArr.push(index);
+  setThStyle();
+})
+
+// 点击每列时选择
 $('.main-enroll .students tbody').on('click', 'tr', function () {
   if (ctrlSure) {
     $(this).toggleClass('checked');
@@ -160,7 +170,7 @@ let studentsDetails = [];
 let sStatus = null;
 let searchType = 1;
 const setStudentsMes = (current, searchType, studentNumberOrNameLike = '', group = null, sStatus = null) => {
-
+  console.log([current, searchType, studentNumberOrNameLike, group, sStatus])
   const size = parseInt(Math.floor(($('.main-enroll .pages').offset().top -
     $('.main-enroll .students thead').offset().top - 50) / 50), 10);
   $.ajax({
@@ -359,10 +369,11 @@ $('.main-enroll .head #searchtype').on('click', function () {
 /* 模糊搜索学生 */
 /* @author: 陈泳充 */
 $('.main-enroll .head input').on('focus', () => {
+  // 回车搜索
   const temp_1 = (e) => {
     if (e.keyCode === 13) {
       const value = $('.main-enroll .head input').val().trim();
-      // 内容为空不往下执行
+      // 内容为空 不往下执行
       if (!value) {
         return;
       }
@@ -380,19 +391,21 @@ $('.main-enroll .head input').on('focus', () => {
       }
       sInputValue = value;
       setStudentsMes(1, searchType, sInputValue, group, sStatus);
+      $('.main-enroll .head input').blur();
     }
   }
-
+  // 清空还原
   const temp_2 = (e) => {
     const value = $('.main-enroll .head input').val().trim();
     if (e.keyCode === 8) {
       if (value.length === 1 && sInputValue) {
-        setStudentsMes(1, searchType, '', group, sStatus);
         sInputValue = '';
+        setStudentsMes(1, searchType, '', group, sStatus);
       }
     }
   }
 
+  // 绑定与解绑
   $('html').on('keydown', temp_1);
   $('html').on('keydown', temp_2);
 
@@ -489,11 +502,14 @@ $('.main-enroll .head .change').on('click', () => {
           <div class="is-change-no">取消</div>
         </div>
       </div>`);
+      checkArr.sort(function (a, b) {
+        return a - b
+      });
       for (let i = 0; i < len; i++) {
         names += `<li>${studentsDetails[checkArr[i]].name}</li>`;
       }
       names += '</ul>';
-      $('.change-status .is-change span').html(`确认把${names}的状态修改为"${value}" 吗？`);
+      $('.change-status .is-change span').html(`确认把${names}的状态修改为 <i style="color: red">${value}</i> 吗？`);
       $('.change-status .is-change .is-change-no').one('click', () => {
         $('.change-status').fadeOut(100);
       });
