@@ -373,8 +373,8 @@ $('.main-enroll .head input').on('focus', () => {
   const temp_1 = (e) => {
     if (e.keyCode === 13) {
       const value = $('.main-enroll .head input').val().trim();
-      // 内容为空 不往下执行
-      if (!value) {
+      // 内容为空或没有变化 不往下执行
+      if (!value || value === sInputValue) {
         return;
       }
       const temp = isNaN(value); // 数字为false 汉字为true   0为学号 1为姓名
@@ -395,26 +395,25 @@ $('.main-enroll .head input').on('focus', () => {
     }
   }
   // 清空还原
-  const temp_2 = (e) => {
+  const temp_2 = () => {
     const value = $('.main-enroll .head input').val().trim();
-    if (e.keyCode === 8) {
-      if (value.length === 1 && sInputValue) {
-        sInputValue = '';
-        setStudentsMes(1, searchType, '', group, sStatus);
-      }
+    if (sInputValue !== '' && value === '') {
+      setStudentsMes(1, searchType, '', group, sStatus);
+      sInputValue = '';
     }
+    return;
   }
 
   // 绑定与解绑
   $('html').on('keydown', temp_1);
-  $('html').on('keydown', temp_2);
+  $('.main-enroll .head input').on('input', temp_2);
 
   $('.main-enroll .head input').one('blur', () => {
     $('html').off('keydown', temp_1);
-    $('html').off('keydown', temp_2);
+    $('.main-enroll .head input').off('input', temp_2);
+    sInputValue = $('.main-enroll .head input').val().trim();
   });
 });
-
 /* 分页 */
 /* @author: 陈泳充 */
 
